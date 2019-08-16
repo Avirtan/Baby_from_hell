@@ -5,10 +5,15 @@ using UnityEngine;
 public class ControllPlayer : MonoBehaviour
 {
     public float speed;
+    public Transform groundCheck;
+    public int gravity;
+    public float jumpForce = 1000f;
+    public Animator anim;
+
     private Rigidbody2D player;
-    private Vector3 change;
-    private bool left;
-    private bool top;
+    private bool jump = false;
+    private bool grounded = false;
+    private bool isLeft = false;
     // Start is called before the first frame update 
     void Start()
     {
@@ -18,23 +23,30 @@ public class ControllPlayer : MonoBehaviour
     // Update is called once per frame 
     void Update()
     {
-        change = Vector3.zero;
-        change.x = Input.GetAxisRaw("Horizontal");
-        //change.y = Input.GetAxisRaw("Vertical");
-        //Debug.Log("speed_x:"+change.x);
-        // Debug.Log("speed_y:"+change.y*speed);
-        if (change != Vector3.zero)
+        //Debug.Log("player : "+transform.position);
+        //Debug.Log("ground : "+groundCheck.position);
+       // Debug.Log(Physics2D.Linecast(transform.position, groundCheck.position,(1<<8)).transform);//.transform.name);
+        //Debug.Log(grounded);
+        grounded = Physics2D.Linecast(transform.position, groundCheck.position,(1<<8));
+        if (Input.GetButtonDown("Jump") && grounded)
         {
-            MoveCharacter();
-            //Debug.Log("x:"+change.x);
-            // Debug.Log("y:"+change.y);
+            jump = true;
         }
-        //Debug.Log("vector:"+change);
     }
-    void MoveCharacter()
+
+    void FixedUpdate ()
     {
-        player.MovePosition(
-        transform.position + change * speed * Time.fixedDeltaTime
-        );
+        if (jump)
+        {
+            player.AddForce(new Vector2(0f, jumpForce));
+            jump = false;
+        }
+        float x = Input.GetAxis ("Horizontal");
+
+        isLeft = x != 0 ?(x>0?isLeft = false:isLeft=true):isLeft = isLeft;
+        anim.SetFloat("speed", x);
+        anim.SetBool("isLeft", isLeft);
+        Vector3 move = new Vector3 (x * speed, player.velocity.y, 0f);
+        player.velocity = move;
     }
 }
