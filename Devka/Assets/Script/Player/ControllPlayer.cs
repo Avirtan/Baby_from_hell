@@ -62,9 +62,12 @@ public class ControllPlayer : MonoBehaviour
         }
         if(!grounded && (isWallLeft || isWallRight)){
             move = new Vector3 (moveX * speed, -0.7f, 0f);
-            if( Input.GetButton("Jump")){
-                if(isWallLeft) {player.AddForce(new Vector2(5000f, 800)); move = new Vector3 (2, 0, 0f);}
-                else {player.AddForce(new Vector2(-5000f, 800)); move = new Vector3 (-2, 0, 0f);}
+            if( Input.GetButtonDown("Jump")){
+                player.velocity = Vector2.zero;
+                if(isWallLeft) {player.AddForce(new Vector2(2000, 500));//new Vector2(5000, 500),ForceMode2D.Impulse);
+                 move = new Vector3 (2, 0, 0f);}
+                else {player.AddForce(new Vector2(-2000, 500));
+                 move = new Vector3 (-2, 0, 0f);}
                 isLeft =!isLeft;
             }
         }
