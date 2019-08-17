@@ -11,9 +11,11 @@ public class ControllPlayer : MonoBehaviour
     public Animator anim;
 
     private Rigidbody2D player;
-    private bool jump = false;
+    private bool  jump = false;
+    private bool isJump = false;
     private bool grounded = false;
     private bool isLeft = false;
+    private bool isFall = false;
     // Start is called before the first frame update 
     void Start()
     {
@@ -27,7 +29,7 @@ public class ControllPlayer : MonoBehaviour
         //Debug.Log("ground : "+groundCheck.position);
        // Debug.Log(Physics2D.Linecast(transform.position, groundCheck.position,(1<<8)).transform);//.transform.name);
         grounded = Physics2D.Linecast(transform.position, groundCheck.position,(1<<10));
-        Debug.Log(grounded);
+        //Debug.Log(grounded);
         if (Input.GetButtonDown("Jump") && grounded)
         {
             jump = true;
@@ -42,10 +44,11 @@ public class ControllPlayer : MonoBehaviour
             jump = false;
         }
         float x = Input.GetAxis ("Horizontal");
-
         isLeft = x != 0 ?(x>0?isLeft = false:isLeft=true):isLeft = isLeft;
         anim.SetFloat("speed", x);
         anim.SetBool("isLeft", isLeft);
+        anim.SetFloat("Jump", player.velocity.y);
+        Debug.Log(player.velocity.y);
         Vector3 move = new Vector3 (x * speed, player.velocity.y, 0f);
         player.velocity = move;
     }
