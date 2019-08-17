@@ -6,7 +6,6 @@ public class ControllPlayer : MonoBehaviour
 {
     public float speed;
     public Transform groundCheck;
-    public int gravity;
     public float jumpForce = 1000f;
     public Animator anim;
 
@@ -16,7 +15,7 @@ public class ControllPlayer : MonoBehaviour
     private bool grounded = false;
     private bool isLeft = false;
     private bool isFall = false;
-    private double rateJump  = 0;
+    private double rateJump  = 0.4;
     private float moveX = 0;
     // Start is called before the first frame update 
     void Start()
@@ -39,7 +38,7 @@ public class ControllPlayer : MonoBehaviour
 
     void DebugF(){
         Debug.Log(rateJump);
-        Debug.Log( Input.GetButton("Jump"));
+       // Debug.Log( Input.GetButton("Jump"));
     }
     void FixedUpdate ()
     {
@@ -52,18 +51,17 @@ public class ControllPlayer : MonoBehaviour
         DebugF();
     }
     void InputKey(){
-        if( Input.GetButton("Jump") && grounded) if( rateJump < 1) rateJump+=Time.deltaTime;
-        if( !Input.GetButton("Jump") && grounded && rateJump>0) jump = true;
+        if( Input.GetButton("Jump") && grounded) if( rateJump < 1) rateJump+=Time.deltaTime*2;
+        if( !Input.GetButton("Jump") && grounded && rateJump>0.4) jump = true;
         moveX = Input.GetAxis ("Horizontal");
         isLeft = moveX != 0 ?(moveX>0?isLeft = false:isLeft=true):isLeft = isLeft;
-        TimeKeyDown();
     }
     void Actions(){
         if (jump)
         {
             player.AddForce(new Vector2(0f, (float)(rateJump*jumpForce)));
             jump = false;
-            rateJump = 0.0f;
+            rateJump = 0.4;
         }
     }
 
