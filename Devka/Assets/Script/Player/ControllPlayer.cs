@@ -26,8 +26,8 @@ public class ControllPlayer : MonoBehaviour
         //Debug.Log("player : "+transform.position);
         //Debug.Log("ground : "+groundCheck.position);
        // Debug.Log(Physics2D.Linecast(transform.position, groundCheck.position,(1<<8)).transform);//.transform.name);
-        //Debug.Log(grounded);
         grounded = Physics2D.Linecast(transform.position, groundCheck.position,(1<<9));
+        Debug.Log(grounded);
         if (Input.GetButtonDown("Jump") && grounded)
         {
             jump = true;
