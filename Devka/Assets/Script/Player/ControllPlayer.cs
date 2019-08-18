@@ -44,7 +44,8 @@ public class ControllPlayer : MonoBehaviour
         //Debug.Log("right:"+isWallRight);
         //Debug.Log(moveX);
         //Debug.Log(isLeft);
-        Debug.Log(player.velocity.y);
+         Debug.Log(player.velocity.x);
+        //Debug.Log(grounded);
     }
     void FixedUpdate ()
     {
@@ -106,6 +107,9 @@ public class ControllPlayer : MonoBehaviour
                     player.AddForce(new Vector2(moveX * 80 * airAcceleration * 7, 50 * airAcceleration * 7));
                 }
             }
+        }
+        if(grounded && player.velocity.y < 0){
+            player.AddForce(new Vector2(100, player.velocity.y));
         }
     }
 

@@ -2653,6 +2653,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: holm
       objectReference: {fileID: 0}
+    - target: {fileID: 8565499481974281552, guid: 62a2c4f1762ae0749a3b14b1796ac2e5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7586774239806982827, guid: 62a2c4f1762ae0749a3b14b1796ac2e5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2707,6 +2712,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 25.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 5249740793491921421, guid: 62a2c4f1762ae0749a3b14b1796ac2e5,
+        type: 3}
+      propertyPath: m_Material
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 62a2c4f1762ae0749a3b14b1796ac2e5, type: 3}
