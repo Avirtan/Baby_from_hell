@@ -47,8 +47,8 @@ public class ControllPlayer : MonoBehaviour
         //Debug.Log(isLeft);
         // Debug.Log(player.velocity.x*20);
         //Debug.Log(grounded);
-        Debug.Log("лево: "+isGlideLeft);
-        Debug.Log("право: "+isGlideRight);
+        //Debug.Log("лево: "+isGlideLeft);
+       // Debug.Log("право: "+isGlideRight);
     }
     void FixedUpdate ()
     {
@@ -153,6 +153,8 @@ public class ControllPlayer : MonoBehaviour
         bool grounded1 = Physics2D.Linecast(transform.position, groundCheck.position,(1<<10));
         bool grounded2 = Physics2D.Linecast(transform.position, groundCheck.position,(1<<11));
         bool grounded3 = Physics2D.Linecast(transform.position, groundCheck.position,(1<<12));
+        Debug.Log(grounded3);
         if(grounded1 || grounded2 || grounded3) grounded = true;
+        else grounded = false;
     }
 }
