@@ -130,6 +130,9 @@ public class ControllPlayer : MonoBehaviour
         if(isWallLeft && player.velocity.y < 0) anim.SetInteger("isWall",-1);
         else if(isWallRight && player.velocity.y < 0) anim.SetInteger("isWall",1);
         else anim.SetInteger("isWall",0);
+        if(isGlideLeft && moveX == 0) anim.SetInteger("isGlide",-1);
+        else if(isGlideRight && moveX == 0) anim.SetInteger("isGlide",1);
+        else anim.SetInteger("isGlide",0);
     }
 
     /// <summary>
