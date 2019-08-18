@@ -79,7 +79,7 @@ public class ControllPlayer : MonoBehaviour
     void Actions(){
 
         // прыжок на земле
-        if (jump )//&& (!isWallLeft && !isWallRight))
+        if (jump)
         {
             // задание максимума высоты прыжка
             if (rateJump > 0.7) { rateJump = 1; }
