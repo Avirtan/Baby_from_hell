@@ -79,11 +79,10 @@ public class ControllPlayer : MonoBehaviour
     void Actions(){
 
         // прыжок на земле
-        if (jump )//&& (!isWallLeft && !isWallRight))
+        if (jump )
         {
             // задание максимума высоты прыжка
             if (rateJump > 0.7) { rateJump = 1; }
-            // 
             player.AddForce(new Vector2(0f, (float)(rateJump*jumpForce)));
             jump = false;
             rateJump = 0.5;
