@@ -44,6 +44,7 @@ public class ControllPlayer : MonoBehaviour
         //Debug.Log("right:"+isWallRight);
         //Debug.Log(moveX);
         //Debug.Log(isLeft);
+        Debug.Log(player.velocity.y);
     }
     void FixedUpdate ()
     {
@@ -78,7 +79,7 @@ public class ControllPlayer : MonoBehaviour
     void Actions(){
 
         // прыжок на земле
-        if (jump && (!isWallLeft && !isWallRight))
+        if (jump )//&& (!isWallLeft && !isWallRight))
         {
             // задание максимума высоты прыжка
             if (rateJump > 0.7) { rateJump = 1; }
@@ -87,17 +88,8 @@ public class ControllPlayer : MonoBehaviour
             jump = false;
             rateJump = 0.5;
         }
-       /* if(!grounded && (isWallLeft || isWallRight)){
-            move = new Vector3 (moveX * speed, -0.7f, 0f);
-            if( Input.GetButtonDown("Jump")){
-                player.velocity = Vector2.zero;
-                if(isWallLeft) {player.AddForce(new Vector2(2000, 500));//new Vector2(5000, 500),ForceMode2D.Impulse);
-                 move = new Vector3 (2, 0, 0f);}
-                else {player.AddForce(new Vector2(-2000, 500));
-                 move = new Vector3 (-2, 0, 0f);}
-                isLeft =!isLeft;*/
         // прыжки от стены
-        if (!grounded && (isWallLeft || isWallRight) && !jump){
+        if (!grounded && (isWallLeft || isWallRight) && !jump &&  player.velocity.y < 0){
             // скольжения по стене
             move = new Vector3 (moveX * speed, -1f, 0f);
             // нажатие пробела на стене
@@ -118,20 +110,6 @@ public class ControllPlayer : MonoBehaviour
         }
     }
 
-        // прыжок у стены в стиле Барокко!!! Требуется срочное исправление!!!                 <---------------------|
-        if (grounded && (isWallLeft || isWallRight) && jump) 
-        {
-            if (isWallLeft)
-            {
-                player.AddForce(new Vector2(1000f, (float)(0)));
-            }
-            else if (isWallRight)
-            {
-                player.AddForce(new Vector2(-1000f, (float)(0)));
-            }            
-        }
-    }
-
     /// <summary>
     /// АНИМАЦИЯ
     /// </summary>
@@ -140,8 +118,8 @@ public class ControllPlayer : MonoBehaviour
         anim.SetFloat("speed", moveX);
         anim.SetBool("isLeft", isLeft);
         anim.SetFloat("Jump", player.velocity.y);
-        if(isWallLeft) anim.SetInteger("isWall",-1);
-        else if(isWallRight) anim.SetInteger("isWall",1);
+        if(isWallLeft && player.velocity.y < 0) anim.SetInteger("isWall",-1);
+        else if(isWallRight && player.velocity.y < 0) anim.SetInteger("isWall",1);
         else anim.SetInteger("isWall",0);
     }
 
