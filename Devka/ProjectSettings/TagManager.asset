@@ -16,8 +16,8 @@ TagManager:
   - room
   - 
   - Ground
-  - 
-  - 
+  - glideLeft
+  - glideRight
   - 
   - 
   - 

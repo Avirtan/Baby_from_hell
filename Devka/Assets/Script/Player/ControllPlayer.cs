@@ -27,7 +27,8 @@ public class ControllPlayer : MonoBehaviour
     private bool isLeft = false; // проверка поворота персонажа
     private bool isWallLeft = false; // проверка на левую стену
     private bool isWallRight = false; // проверка на правую стену
-
+    private bool isGlideLeft = false; 
+    private bool isGlideRight = false;
     
     void Start()
     {
@@ -44,8 +45,10 @@ public class ControllPlayer : MonoBehaviour
         //Debug.Log("right:"+isWallRight);
         //Debug.Log(moveX);
         //Debug.Log(isLeft);
-         Debug.Log(player.velocity.x);
+        // Debug.Log(player.velocity.x*20);
         //Debug.Log(grounded);
+        Debug.Log("лево: "+isGlideLeft);
+        Debug.Log("право: "+isGlideRight);
     }
     void FixedUpdate ()
     {
@@ -108,8 +111,11 @@ public class ControllPlayer : MonoBehaviour
                 }
             }
         }
-        if(grounded && player.velocity.y < 0){
-            player.AddForce(new Vector2(100, player.velocity.y));
+        if(isGlideLeft){
+           player.AddForce(new Vector2(-100, player.velocity.y));
+        }
+        if(isGlideRight){
+           player.AddForce(new Vector2(100, player.velocity.y));
         }
     }
 
@@ -127,11 +133,23 @@ public class ControllPlayer : MonoBehaviour
     }
 
     /// <summary>
-    /// ПРОВЕРКА ЗЕМЛИ И СТЕН
+    /// ПРОВЕРКА ВСЕХ СТОРОН
     /// </summary>
     void CheckSide(){
-        grounded = Physics2D.Linecast(transform.position, groundCheck.position,(1<<10));
+        CheckGround();
         isWallLeft = Physics2D.Linecast(transform.position, wallCheckLeft.position,(1<<10));
         isWallRight = Physics2D.Linecast(transform.position, wallCheckRight.position,(1<<10));
+        isGlideLeft = Physics2D.Linecast(transform.position, groundCheck.position,(1<<11));
+        isGlideRight = Physics2D.Linecast(transform.position, groundCheck.position,(1<<12));
+    }
+
+    /// <summary>
+    /// ПРОВЕРКА Земли
+    /// </summary>
+    void CheckGround(){
+        bool grounded1 = Physics2D.Linecast(transform.position, groundCheck.position,(1<<10));
+        bool grounded2 = Physics2D.Linecast(transform.position, groundCheck.position,(1<<11));
+        bool grounded3 = Physics2D.Linecast(transform.position, groundCheck.position,(1<<12));
+        if(grounded1 || grounded2 || grounded3) grounded = true;
     }
 }
