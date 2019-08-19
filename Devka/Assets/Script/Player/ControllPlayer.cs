@@ -9,15 +9,15 @@ public class ControllPlayer : MonoBehaviour
 {
     private Rigidbody2D player; // игрок
     public Animator anim; // анимация
-
     public Transform groundCheck; // зона снизу
     public Transform wallCheckLeft; // зона слева
     public Transform wallCheckRight; // зона справа
     public float speed; // скорость персонажа
     public float jumpForce = 1000f; // сила прыжка
-    public bool isDeath = false; // проверка на смерть
-
+    public GameObject magic_left,magic_right; //левая магия
     public float airAcceleration = 2f; // сопротивление воздуха
+    
+    private bool isDeath = false; // проверка на смерть
     private Vector3 move; // вектор движения
     private double rateJump = 0.5; // коэффициент прыжка
     private float moveX = 0; // направление движения
@@ -29,7 +29,7 @@ public class ControllPlayer : MonoBehaviour
     private bool isGlideLeft = false; // Проверка на спуск лево 
     private bool isGlideRight = false;// Проверка на спуск право 
     private bool CastMagic = false; // анимация магии
-
+    private double timerMagic = 0; // Для произносения магии раз в какое то время сек
     void Start()
     {
         player = GetComponent<Rigidbody2D>();
@@ -50,6 +50,8 @@ public class ControllPlayer : MonoBehaviour
         //Debug.Log("лево: "+isGlideLeft);
        // Debug.Log("право: "+isGlideRight);
       // Debug.Log(isDeath);
+       // Debug.Log(CastMagic);
+       
     }
 
     /// <summary>
@@ -62,8 +64,8 @@ public class ControllPlayer : MonoBehaviour
             if(!CastMagic){ // условия для заканчивания анимаций
                 InputKey();
                 Actions();
-                AnimationSet();
             }
+            AnimationSet();
             player.velocity = move;
             DebugF();
         }else {
@@ -84,24 +86,40 @@ public class ControllPlayer : MonoBehaviour
     /// НАЖАТИЯ КЛАВИШ
     /// </summary>
     void InputKey(){
+        //тестовая смерть
         if(Input.GetButton("Shift") )
         {
             isDeath = true;
         }
+        //увелечение силы прыжка
         if(Input.GetButton("Jump") && grounded && rateJump < 1)
         {
             rateJump += Time.deltaTime * 2;
         }
+        //отжатие пробела и прыжок
         if (!Input.GetButton("Jump") && grounded && rateJump > 0.5)
         {
             jump = true;
         }
+        //движение в стороны
         moveX = Input.GetAxis ("Horizontal");
+        //определение стороны движения
         isLeft = moveX != 0 ?(moveX>0?isLeft = false:isLeft=true):isLeft;
-        if(Input.GetButton("Ctrl") && player.velocity.x == 0 && moveX == 0 && grounded && !CastMagic)
+        //запуск магии
+        if(Input.GetButton("Ctrl") && player.velocity.x == 0 && moveX == 0 && grounded && !CastMagic && Time.time > timerMagic )
         {
+            //таймер 1 раз в сек 
+            timerMagic = Time.time + 1;
             CastMagic = true;
-            Debug.Log(CastMagic);
+            Vector3 v3 = transform.position;
+            if(isLeft) {
+                v3+= new Vector3(-0.4f,-0.1f,0);
+                GameObject magic = Instantiate(magic_left, v3, transform.rotation);
+            }
+            else {
+                v3+= new Vector3(0.5f,-0.1f,0);
+                GameObject magic = Instantiate(magic_right, v3, transform.rotation);
+            }
         }
     }
 
@@ -158,9 +176,11 @@ public class ControllPlayer : MonoBehaviour
         anim.SetFloat("speed", moveX);
         anim.SetBool("isLeft", isLeft);
         anim.SetFloat("Jump", player.velocity.y);
+
         if(isWallLeft && player.velocity.y < 0) anim.SetInteger("isWall",-1);
         else if(isWallRight && player.velocity.y < 0) anim.SetInteger("isWall",1);
         else anim.SetInteger("isWall",0);
+
         if(isGlideLeft && moveX == 0) anim.SetInteger("isGlide",-1);
         else if(isGlideRight && moveX == 0) anim.SetInteger("isGlide",1);
         else anim.SetInteger("isGlide",0);
@@ -199,11 +219,19 @@ public class ControllPlayer : MonoBehaviour
 
     // функция дла анимации магии
     void SetMagic(){
-        //Debug.Log(CastMagic);
         CastMagic = false;
     }
 
-    void Timer(){
-        
+    //возможно удалить потом, пока не нужен
+    void DelaySpell(){
+        if(timerMagic>0){
+            timerMagic+=Time.deltaTime;
+        }
+        if(timerMagic>1) timerMagic = 0;
     }
+
+    public void Test(){
+        Debug.Log("test");
+    }
+    
 }
