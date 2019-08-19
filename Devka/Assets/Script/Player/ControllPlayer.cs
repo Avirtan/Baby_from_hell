@@ -111,15 +111,7 @@ public class ControllPlayer : MonoBehaviour
             //таймер 1 раз в сек 
             timerMagic = Time.time + 1;
             CastMagic = true;
-            Vector3 v3 = transform.position;
-            if(isLeft) {
-                v3+= new Vector3(-0.4f,-0.1f,0);
-                GameObject magic = Instantiate(magic_left, v3, transform.rotation);
-            }
-            else {
-                v3+= new Vector3(0.5f,-0.1f,0);
-                GameObject magic = Instantiate(magic_right, v3, transform.rotation);
-            }
+           
         }
     }
 
@@ -165,7 +157,18 @@ public class ControllPlayer : MonoBehaviour
         if(isGlideRight){
            player.AddForce(new Vector2(100, player.velocity.y));
         }
-
+        //магия 
+        if(CastMagic){
+             Vector3 v3 = transform.position;
+            if(isLeft) {
+                v3+= new Vector3(-0.4f,-0.1f,0);
+                GameObject magic = Instantiate(magic_left, v3, transform.rotation);
+            }
+            else {
+                v3+= new Vector3(0.5f,-0.1f,0);
+                GameObject magic = Instantiate(magic_right, v3, transform.rotation);
+            }
+        }
     }
 
     /// <summary>
