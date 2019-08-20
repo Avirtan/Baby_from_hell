@@ -1,0 +1,76 @@
+
+Devka.png
+size: 256,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ногаЛ1
+  rotate: false
+  xy: 187, 232
+  size: 55, 112
+  orig: 55, 112
+  offset: 0, 0
+  index: -1
+ногаП1
+  rotate: false
+  xy: 1, 329
+  size: 46, 126
+  orig: 46, 126
+  offset: 0, 0
+  index: -1
+рукаЛ
+  rotate: false
+  xy: 95, 227
+  size: 44, 45
+  orig: 44, 45
+  offset: 0, 0
+  index: -1
+узи
+  rotate: false
+  xy: 49, 329
+  size: 57, 60
+  orig: 57, 60
+  offset: 0, 0
+  index: -1
+кофта
+  rotate: false
+  xy: 100, 117
+  size: 85, 108
+  orig: 85, 109
+  offset: 0, 1
+  index: -1
+косаЛ
+  rotate: false
+  xy: 1, 222
+  size: 58, 105
+  orig: 58, 105
+  offset: 0, 0
+  index: -1
+косаП
+  rotate: false
+  xy: 187, 117
+  size: 68, 113
+  orig: 68, 113
+  offset: 0, 0
+  index: -1
+голова
+  rotate: false
+  xy: 1, 117
+  size: 97, 103
+  orig: 97, 103
+  offset: 0, 0
+  index: -1
+меч
+  rotate: false
+  xy: 1, 1
+  size: 238, 114
+  orig: 239, 114
+  offset: 0, 0
+  index: -1
+рукаП
+  rotate: false
+  xy: 61, 222
+  size: 32, 82
+  orig: 32, 82
+  offset: 0, 0
+  index: -1
