@@ -920,7 +920,7 @@ AnimatorController:
     m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
-    m_Name: Base Layer
+    m_Name: Move
     m_StateMachine: {fileID: 515546757532349156}
     m_Mask: {fileID: 0}
     m_Motions: []
@@ -966,20 +966,20 @@ AnimatorStateMachine:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Base Layer
+  m_Name: Move
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 4453187720228973546}
     m_Position: {x: 130, y: 1170, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8821034108091599626}
-    m_Position: {x: -180, y: 1170, z: 0}
+    m_Position: {x: -170, y: 1150, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6553349615715823702}
-    m_Position: {x: 130, y: 1370, z: 0}
+    m_Position: {x: 130, y: 1340, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1886637385887264965}
-    m_Position: {x: -200, y: 1360, z: 0}
+    m_Position: {x: -160, y: 1330, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3735830700456060992}
     m_Position: {x: -600, y: 700, z: 0}
