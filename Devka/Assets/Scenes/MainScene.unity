@@ -1169,5 +1169,70 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3755495329683806972, guid: 3f042b7945a3e1d4fb2ceb69c595e01f,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: -0.58
+      objectReference: {fileID: 0}
+    - target: {fileID: 3755495329683806972, guid: 3f042b7945a3e1d4fb2ceb69c595e01f,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 1.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 3755495329127650852, guid: 3f042b7945a3e1d4fb2ceb69c595e01f,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3755495329127650852, guid: 3f042b7945a3e1d4fb2ceb69c595e01f,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3755495329127650852, guid: 3f042b7945a3e1d4fb2ceb69c595e01f,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3755495329509290326, guid: 3f042b7945a3e1d4fb2ceb69c595e01f,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3755495329509290326, guid: 3f042b7945a3e1d4fb2ceb69c595e01f,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3755495329509290326, guid: 3f042b7945a3e1d4fb2ceb69c595e01f,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3755495329509290326, guid: 3f042b7945a3e1d4fb2ceb69c595e01f,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3755495328931802131, guid: 3f042b7945a3e1d4fb2ceb69c595e01f,
+        type: 3}
+      propertyPath: m_BackGroundColor.a
+      value: 0.6862745
+      objectReference: {fileID: 0}
+    - target: {fileID: 3755495328931802131, guid: 3f042b7945a3e1d4fb2ceb69c595e01f,
+        type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0.5781417
+      objectReference: {fileID: 0}
+    - target: {fileID: 3755495328931802131, guid: 3f042b7945a3e1d4fb2ceb69c595e01f,
+        type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0.5881097
+      objectReference: {fileID: 0}
+    - target: {fileID: 3755495328931802131, guid: 3f042b7945a3e1d4fb2ceb69c595e01f,
+        type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0.6037736
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f042b7945a3e1d4fb2ceb69c595e01f, type: 3}
