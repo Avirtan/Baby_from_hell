@@ -48,10 +48,18 @@ public class PlayerController : MonoBehaviour
     void HandlerJumo(){
         if(OnGround() &&Input.GetButton("Jump")){
             isJump = true;
-            if(diraction == 1)
-                player.AddForce (new Vector2 (1f, 2),ForceMode2D.Impulse);
-            else 
-                player.AddForce (new Vector2 (-1f, 2),ForceMode2D.Impulse);
+            if(moveX != 0){
+                if(diraction == 1)
+                    player.AddForce (new Vector2 (-0.5f, 2f),ForceMode2D.Impulse);
+                else 
+                    player.AddForce (new Vector2 (0.5f, 2f),ForceMode2D.Impulse);
+            }else{
+                if(diraction == 1)
+                    player.AddForce (new Vector2 (0f, 2f),ForceMode2D.Impulse);
+                else 
+                    player.AddForce (new Vector2 (0f, 2f),ForceMode2D.Impulse);
+            }
+
         }
         if(player.velocity.y == 0)
             isJump = false;
