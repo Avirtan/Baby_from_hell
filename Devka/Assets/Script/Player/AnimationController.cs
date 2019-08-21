@@ -17,7 +17,7 @@ public class AnimationController : MonoBehaviour
 
 	public string attackAnimation = "Attack";
 
-    enum State {IDLE, RUN,SHOOT,DEAD};
+    enum State {IDLE, RUN,SHOOT,JUMP,DEAD};
     private State state = State.IDLE;
 
     private UnityArmatureComponent armatureComponent;
@@ -77,6 +77,9 @@ public class AnimationController : MonoBehaviour
         }
 	}
 
+    public void Jump(){
+        Debug.Log("jump");
+    }
     public void Flip(){
         armatureComponent.armature.flipX = true;
     }

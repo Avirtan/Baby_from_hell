@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private bool isDeath = false;
     private bool onGround = false;
     private string TagGround = "GROUND";
+    private bool isJump = false;
     void Start()
     {
         player = GetComponent<Rigidbody2D>();
@@ -27,17 +28,36 @@ public class PlayerController : MonoBehaviour
     {
         if(!isDeath){
             HandlerMove();
+            HandlerJumo();
         }
         ControlAnimation();
-        Debug.Log(isRuning());
     }
 
+
+    // управление движением
     void HandlerMove(){
+        //speed = new Vector3 ( player.velocity.x, player.velocity.y, 0f);
+        if(isJump) return;
         moveX = Input.GetAxis ("Horizontal");
         speed = new Vector3 (moveX * 7, player.velocity.y, 0f);
         diraction = moveX != 0 ?(moveX>0?diraction = 1:diraction=-1):diraction;
         player.velocity = speed;
     }
+
+    //управление прыжком
+    void HandlerJumo(){
+        if(OnGround() &&Input.GetButton("Jump")){
+            isJump = true;
+            if(diraction == 1)
+                player.AddForce (new Vector2 (1f, 2),ForceMode2D.Impulse);
+            else 
+                player.AddForce (new Vector2 (-1f, 2),ForceMode2D.Impulse);
+        }
+        if(player.velocity.y == 0)
+            isJump = false;
+
+    }
+
 
     void ControlAnimation(){
         if(isDeath){
