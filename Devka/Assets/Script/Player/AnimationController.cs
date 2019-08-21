@@ -30,7 +30,7 @@ public class AnimationController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       Debug.Log(armatureComponent.animation.lastAnimationName);
+       //Debug.Log(armatureComponent.animation.lastAnimationName);
     }
 
 
@@ -57,14 +57,15 @@ public class AnimationController : MonoBehaviour
 		
 	}
 
-    public void Run(float speed) {
+    public void Run(float speed,bool shift) {
         if(state !=State.DEAD){
             if(speed > 0){
                 if(state != State.RUN){
                     armatureComponent.animation.FadeIn(runAnimation, 0f, -1);
-			        armatureComponent.animation.timeScale = 1f;
 			        state = State.RUN;
                 }
+                if(!shift)armatureComponent.animation.timeScale = 1f;
+                else armatureComponent.animation.timeScale = 2f;
                 armatureComponent.armature.flipX = false;
             }else{
                 if(state != State.RUN){
@@ -72,6 +73,8 @@ public class AnimationController : MonoBehaviour
 			        armatureComponent.animation.timeScale = 1f;
 			        state = State.RUN;
                 }
+                if(!shift)armatureComponent.animation.timeScale = 1f;
+                else armatureComponent.animation.timeScale = 2f;
                 armatureComponent.armature.flipX = true;
             }
         }

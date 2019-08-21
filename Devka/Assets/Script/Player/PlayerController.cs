@@ -39,14 +39,17 @@ public class PlayerController : MonoBehaviour
         //speed = new Vector3 ( player.velocity.x, player.velocity.y, 0f);
         if(isJump) return;
         moveX = Input.GetAxis ("Horizontal");
-        speed = new Vector3 (moveX * 7, player.velocity.y, 0f);
+        if(Input.GetButton("Shift") && moveX!=0)
+        {
+            speed = new Vector3 (moveX * 12, player.velocity.y, 0f);
+        }else speed = new Vector3 (moveX * 7, player.velocity.y, 0f);
         diraction = moveX != 0 ?(moveX>0?diraction = 1:diraction=-1):diraction;
         player.velocity = speed;
     }
 
     //управление прыжком
     void HandlerJumo(){
-        if(OnGround() &&Input.GetButton("Jump")){
+        if(OnGround() && Input.GetButton("Jump")){
             isJump = true;
             if(moveX != 0){
                 if(diraction == 1)
@@ -74,7 +77,7 @@ public class PlayerController : MonoBehaviour
             sprite.Jump(diraction);
         }else if(OnGround()){
             if(isRuning()){
-                sprite.Run(moveX);
+                sprite.Run(moveX,Input.GetButton("Shift"));
             }else{
                 sprite.Idle(diraction);
             }
