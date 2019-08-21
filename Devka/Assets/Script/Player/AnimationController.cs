@@ -10,7 +10,7 @@ public class AnimationController : MonoBehaviour
 
 	public string runAnimation = "running";
 
-	public string jumpAnimation = "Jump";
+	public string jumpAnimation = "jumpStay";
 	public string glideAnimation = "Glide";
 
 	public string dieAnimation = "Die";
@@ -30,7 +30,8 @@ public class AnimationController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+       Debug.Log(armatureComponent.animation.lastAnimationName);
+       armatureComponent.animation.Play("jumpStay");
     }
 
 
@@ -39,7 +40,7 @@ public class AnimationController : MonoBehaviour
         if(state != State.DEAD){
             if(direction == 1){
                 if (state != State.IDLE) {
-                    armatureComponent.animation.FadeIn (idleAnimation, 0.1f, -1);
+                    armatureComponent.animation.FadeIn(idleAnimation, 0.1f, -1);
                     armatureComponent.animation.timeScale = 1f;
                     state = State.IDLE;
 		        }
@@ -47,7 +48,7 @@ public class AnimationController : MonoBehaviour
             }else 
             {
                 if (state != State.IDLE) {
-                    armatureComponent.animation.FadeIn (idleAnimation, 0.1f, -1);
+                    armatureComponent.animation.FadeIn(idleAnimation, 0.1f, -1);
                     armatureComponent.animation.timeScale = 1f;
                     state = State.IDLE;
 		        }
@@ -61,14 +62,14 @@ public class AnimationController : MonoBehaviour
         if(state !=State.DEAD){
             if(speed > 0){
                 if(state != State.RUN){
-                    armatureComponent.animation.FadeIn (runAnimation, 0f, -1);
+                    armatureComponent.animation.FadeIn(runAnimation, 0f, -1);
 			        armatureComponent.animation.timeScale = 1f;
 			        state = State.RUN;
                 }
                 armatureComponent.armature.flipX = false;
             }else{
                 if(state != State.RUN){
-                    armatureComponent.animation.FadeIn (runAnimation, 0f, -1);
+                    armatureComponent.animation.FadeIn(runAnimation, 0f, -1);
 			        armatureComponent.animation.timeScale = 1f;
 			        state = State.RUN;
                 }
@@ -77,8 +78,25 @@ public class AnimationController : MonoBehaviour
         }
 	}
 
-    public void Jump(){
-        Debug.Log("jump");
+    public void Jump(int direction){
+        if(state != State.DEAD){
+            if(direction == 1){
+                if (state != State.JUMP) {
+                    armatureComponent.animation.FadeIn(jumpAnimation, 0f, -1);
+                    armatureComponent.animation.timeScale = 1f;
+                    state = State.JUMP;
+		        }
+                armatureComponent.armature.flipX = false;
+            }else 
+            {
+                if (state != State.JUMP) {
+                    armatureComponent.animation.FadeIn(jumpAnimation, 0f, -1);
+                    armatureComponent.animation.timeScale = 1f;
+                    state = State.JUMP;
+		        }
+                armatureComponent.armature.flipX = true;
+            }
+        }
     }
     public void Flip(){
         armatureComponent.armature.flipX = true;

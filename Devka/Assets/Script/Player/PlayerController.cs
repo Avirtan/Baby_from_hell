@@ -70,6 +70,8 @@ public class PlayerController : MonoBehaviour
     void ControlAnimation(){
         if(isDeath){
             return;
+        }else if(isJump){
+            sprite.Jump(diraction);
         }else if(OnGround()){
             if(isRuning()){
                 sprite.Run(moveX);
