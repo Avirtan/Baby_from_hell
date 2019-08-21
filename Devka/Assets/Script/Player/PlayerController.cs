@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
 
     void HandlerMove(){
         moveX = Input.GetAxis ("Horizontal");
-        speed = new Vector3 (moveX * 10, player.velocity.y, 0f);
+        speed = new Vector3 (moveX * 7, player.velocity.y, 0f);
         diraction = moveX != 0 ?(moveX>0?diraction = 1:diraction=-1):diraction;
         player.velocity = speed;
     }

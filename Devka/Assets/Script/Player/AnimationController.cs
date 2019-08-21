@@ -39,7 +39,7 @@ public class AnimationController : MonoBehaviour
         if(state != State.DEAD){
             if(direction == 1){
                 if (state != State.IDLE) {
-                    armatureComponent.animation.FadeIn (idleAnimation, 0.5f, -1);
+                    armatureComponent.animation.FadeIn (idleAnimation, 0.1f, -1);
                     armatureComponent.animation.timeScale = 1f;
                     state = State.IDLE;
 		        }
@@ -47,7 +47,7 @@ public class AnimationController : MonoBehaviour
             }else 
             {
                 if (state != State.IDLE) {
-                    armatureComponent.animation.FadeIn (idleAnimation, 0.5f, -1);
+                    armatureComponent.animation.FadeIn (idleAnimation, 0.1f, -1);
                     armatureComponent.animation.timeScale = 1f;
                     state = State.IDLE;
 		        }
