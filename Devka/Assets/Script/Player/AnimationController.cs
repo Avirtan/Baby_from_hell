@@ -10,7 +10,7 @@ public class AnimationController : MonoBehaviour
 
 	public string runAnimation = "running";
 
-	public string jumpAnimation = "jumpStay";
+	public string jumpAnimation = "jumpRun";
 	public string glideAnimation = "Glide";
 
 	public string dieAnimation = "Die";
@@ -31,7 +31,6 @@ public class AnimationController : MonoBehaviour
     void Update()
     {
        Debug.Log(armatureComponent.animation.lastAnimationName);
-       //armatureComponent.animation.Play("jumpStay");
     }
 
 
