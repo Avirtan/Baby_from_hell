@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Devka_Data
   m_EditorClassIdentifier: 
   dataName: Devka
-  dragonBonesJSON: {fileID: 4900000, guid: 376322d8b0cdca04a9edd9b4792c8c86, type: 3}
+  dragonBonesJSON: {fileID: 4900000, guid: 7de13ef3ce90d324fb56bd07424ee3eb, type: 3}
   textureAtlas:
-  - textureAtlasJSON: {fileID: 4900000, guid: 77e2448e6130d3443a57dfadce0c2e59, type: 3}
-    texture: {fileID: 2800000, guid: 68a44edc11390bc49bc47f7f74a7102a, type: 3}
-    material: {fileID: 2100000, guid: f6568ad26d4f3a847bc9d719857d4e37, type: 2}
+  - textureAtlasJSON: {fileID: 4900000, guid: 401adef37ee320549bf9f9ce998aac47, type: 3}
+    texture: {fileID: 2800000, guid: afb8be204de530046b02d2439ba5d307, type: 3}
+    material: {fileID: 2100000, guid: fba4b572e1611274cb345bf2fa9c9caf, type: 2}
     uiMaterial: {fileID: 0}
