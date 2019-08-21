@@ -31,7 +31,7 @@ public class AnimationController : MonoBehaviour
     void Update()
     {
        Debug.Log(armatureComponent.animation.lastAnimationName);
-       armatureComponent.animation.Play("jumpStay");
+       //armatureComponent.animation.Play("jumpStay");
     }
 
 
