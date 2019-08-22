@@ -38,17 +38,7 @@ public class AnimationController : MonoBehaviour
 
     // Методы для анимации
     public void Idle(int direction) {
-        if(state == State.FAIL){
-            if(armatureComponent.animation.GetState(jumpShiftAnimation)!=null){
-                armatureComponent.animation.GetState(jumpShiftAnimation).Play();
-                if(armatureComponent.animation.GetState(jumpShiftAnimation).isCompleted) state = State.JUMP;
-            }
-            else if(armatureComponent.animation.GetState(jumpRunAnimation)!=null){
-                armatureComponent.animation.GetState(jumpRunAnimation).Play();
-                if(armatureComponent.animation.GetState(jumpRunAnimation).isCompleted) state = State.JUMP;
-            }
-            else state = State.FAIL;
-        }
+        Fail();
         if(state != State.DEAD && state != State.FAIL){
             if(direction ==1)armatureComponent.armature.flipX = false;
             else armatureComponent.armature.flipX = true;
@@ -62,20 +52,7 @@ public class AnimationController : MonoBehaviour
         
 
     public void Run(float speed,bool shift) {
-        if(state == State.FAIL){
-            if(armatureComponent.animation.GetState(jumpShiftAnimation)!=null){
-                armatureComponent.animation.GetState(jumpShiftAnimation).Play();
-                if(armatureComponent.animation.GetState(jumpShiftAnimation).isCompleted) state = State.JUMP;
-            }
-            else if(armatureComponent.animation.GetState(jumpRunAnimation)!=null){
-                armatureComponent.animation.GetState(jumpRunAnimation).Play();
-                if(armatureComponent.animation.GetState(jumpRunAnimation).isCompleted) state = State.JUMP;
-            }
-            else state = State.FAIL;
-           /*  armatureComponent.animation.GetState(jumpRunAnimation).Play();
-           if(armatureComponent.animation.GetState(jumpRunAnimation).isCompleted) state = State.JUMP;
-            else state = State.FAIL;*/
-        }
+        Fail();
         if(state !=State.DEAD  && state != State.FAIL){
             if(speed > 0)armatureComponent.armature.flipX = false;
             else  armatureComponent.armature.flipX = true;
@@ -119,18 +96,20 @@ public class AnimationController : MonoBehaviour
                 armatureComponent.animation.GotoAndStopByTime(jumpRunAnimation,1.29f);
            state = State.FAIL;
         }
-        /* if(Time.time > time+2){
-            armatureComponent.animation.GetState(jumpRunAnimation).Play();
-        }*/
-       // Debug.Log(armatureComponent.animation.GetState(jumpRunAnimation).isCompleted);
-        //if(r) Debug.Log("test");
+
     }
 
-    public bool Fail(){
+    public void Fail(){
         if(state == State.FAIL){
-            armatureComponent.animation.GetState(jumpRunAnimation).Play();
-            Debug.Log("test");
-            return armatureComponent.animation.GetState(jumpRunAnimation).isCompleted;
-        }else return true;
+            if(armatureComponent.animation.GetState(jumpShiftAnimation)!=null){
+                armatureComponent.animation.GetState(jumpShiftAnimation).Play();
+                if(armatureComponent.animation.GetState(jumpShiftAnimation).isCompleted) state = State.JUMP;
+            }
+            else if(armatureComponent.animation.GetState(jumpRunAnimation)!=null){
+                armatureComponent.animation.GetState(jumpRunAnimation).Play();
+                if(armatureComponent.animation.GetState(jumpRunAnimation).isCompleted) state = State.JUMP;
+            }
+            else state = State.FAIL;
+        }
     }
 }
