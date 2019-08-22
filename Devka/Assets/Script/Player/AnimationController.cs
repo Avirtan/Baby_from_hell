@@ -32,13 +32,19 @@ public class AnimationController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       //Debug.Log(animState.currentTime);
+      // Debug.Log(state);
     }
 
 
     // Методы для анимации
     public void Idle(int direction) {
-        if(state != State.DEAD){
+        if(state == State.FAIL){
+            armatureComponent.animation.GetState(jumpRunAnimation).Play();
+            Debug.Log(state);
+            if(armatureComponent.animation.GetState(jumpRunAnimation).isCompleted) state = State.JUMP;
+            else state = State.FAIL;
+        }
+        if(state != State.DEAD && state != State.FAIL){
             if(direction ==1)armatureComponent.armature.flipX = false;
             else armatureComponent.armature.flipX = true;
             if (state != State.IDLE) {
@@ -51,7 +57,13 @@ public class AnimationController : MonoBehaviour
         
 
     public void Run(float speed,bool shift) {
-        if(state !=State.DEAD){
+        if(state == State.FAIL){
+            armatureComponent.animation.GetState(jumpRunAnimation).Play();
+            Debug.Log(state);
+           if(armatureComponent.animation.GetState(jumpRunAnimation).isCompleted) state = State.JUMP;
+            else state = State.FAIL;
+        }
+        if(state !=State.DEAD  && state != State.FAIL){
             if(speed > 0)armatureComponent.armature.flipX = false;
             else  armatureComponent.armature.flipX = true;
             if(state != State.RUN){
@@ -72,23 +84,35 @@ public class AnimationController : MonoBehaviour
             if (state != State.JUMP) {
                 time = Time.time+1;
                 if((speed < -3 && speed >= -7)||(speed > 3 && speed <= 7))
-                    armatureComponent.animation.FadeIn(jumpRunAnimation, -1f, 0);
+                    animState = armatureComponent.animation.Play(jumpRunAnimation, -1);
                 else if(speed <= -8 || speed >= 8){
-                    armatureComponent.animation.FadeIn(jumpShiftAnimation, -1f, 0);
+                   armatureComponent.animation.Play(jumpShiftAnimation, -1);
                 }
                 else
-                    armatureComponent.animation.FadeIn(jumpStayAnimation, -1f, 0);
+                    armatureComponent.animation.Play(jumpStayAnimation, -1);
                 armatureComponent.animation.timeScale = 1f;
                 state = State.JUMP;
             }
         }
+        //Debug.Log(armatureComponent.animation.GetState(jumpStayAnimation).weight );
         if(state == State.JUMP && Time.time > time +1 && state != State.DEAD && state != State.FAIL){
-           armatureComponent.animation.GotoAndPlayByFrame(jumpRunAnimation,70,0);
-           Debug.Log("test");	
+           armatureComponent.animation.GotoAndStopByFrame(jumpRunAnimation,60);
            state = State.FAIL;
           // Debug.Log(animState.isCompleted);
           // armatureComponent.animation.GotoAndPlayByTime(jumpRunAnimation,1.2f);
         }
-        //Debug.Log(armatureComponent.animation.isCompleted );
+        /* if(Time.time > time+2){
+            armatureComponent.animation.GetState(jumpRunAnimation).Play();
+        }*/
+       // Debug.Log(armatureComponent.animation.GetState(jumpRunAnimation).isCompleted);
+        //if(r) Debug.Log("test");
+    }
+
+    public bool Fail(){
+        if(state == State.FAIL){
+            armatureComponent.animation.GetState(jumpRunAnimation).Play();
+            Debug.Log("test");
+            return armatureComponent.animation.GetState(jumpRunAnimation).isCompleted;
+        }else return true;
     }
 }
