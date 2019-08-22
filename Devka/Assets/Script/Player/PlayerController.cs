@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
                 if(diraction == 1)
                     player.AddForce (new Vector2 (-0.5f, 2.4f),ForceMode2D.Impulse);
                 else 
-                    player.AddForce (new Vector2 (0.5f, 2.2f),ForceMode2D.Impulse);
+                    player.AddForce (new Vector2 (0.5f, 2.4f),ForceMode2D.Impulse);
             }else{
                 if(diraction == 1)
                     player.AddForce (new Vector2 (0f, 2f),ForceMode2D.Impulse);
