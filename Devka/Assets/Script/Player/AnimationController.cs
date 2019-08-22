@@ -25,13 +25,16 @@ public class AnimationController : MonoBehaviour
     private UnityArmatureComponent armatureComponent;
 	private DragonBones.AnimationState animState;
     private DragonBones.AnimationData data;
+    private PlayerController player;
 	void Start () {
 		armatureComponent = GetComponent<UnityArmatureComponent>();
+        player = GetComponent<PlayerController>();
 	}
 
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log(player.IsFail);
       //Debug.Log(armatureComponent.animation.GetState(jumpRunAnimation)._animationData.frameCount);
     }
 
@@ -91,40 +94,27 @@ public class AnimationController : MonoBehaviour
         if(state == State.JUMP && Time.time > time  && state != State.DEAD && state != State.FAIL){
            if(armatureComponent.animation.GetState(jumpShiftAnimation)!=null || armatureComponent.animation.GetState(jumpRunAnimation)!=null){//во время шифта
                armatureComponent.animation.FadeIn("fall", 0f,-1); 
+               state = State.FAIL;
+               player.IsFail = true;
            }
-                //armatureComponent.animation.GotoAndStopByTime(jumpShiftAnimation,1.71f);
-           //if(armatureComponent.animation.GetState(jumpRunAnimation)!=null) //обычная
-              //  armatureComponent.animation.GotoAndStopByTime(jumpRunAnimation,1.29f);
-           state = State.FAIL;
         }
-
     }
 
     public void Fail(){
         if(state == State.FAIL){
-            /* if(armatureComponent.animation.GetState(jumpShiftAnimation)!=null){
-                armatureComponent.animation.GotoAndPlayByTime(jumpRunAnimation,1.25f);
-                //armatureComponent.animation.GetState(jumpShiftAnimation).Play();
-                Debug.Log(armatureComponent.animation.GetState(jumpShiftAnimation).isCompleted);
-                if(armatureComponent.animation.GetState(jumpShiftAnimation).isCompleted) state = State.JUMP;
-            }
-            else if(armatureComponent.animation.GetState(jumpRunAnimation)!=null){
-                armatureComponent.animation.GotoAndPlayByTime(jumpRunAnimation,1.67f);
-                //armatureComponent.animation.GetState(jumpRunAnimation).Play();
-                Debug.Log(armatureComponent.animation.GetState(jumpShiftAnimation).isCompleted);
-                if(armatureComponent.animation.GetState(jumpRunAnimation).isCompleted) state = State.JUMP;
-            }
-            else state = State.FAIL;*/
             if(armatureComponent.animation.lastAnimationName == "fall"){
                 armatureComponent.animation.GotoAndPlayByTime(jumpRunAnimation,1.25f);
                // armatureComponent.animation.GetState(jumpRunAnimation).Play();
                 Debug.Log(armatureComponent.animation.GetState(jumpRunAnimation).currentTime);
                // if(armatureComponent.animation.GetState(jumpRunAnimation).isCompleted) state = State.JUMP;
-            }
-            else if (armatureComponent.animation.lastAnimationName == "jump1"){
-                state = State.JUMP;
             }else state = State.FAIL;
-            if(armatureComponent.animation.GetState(jumpRunAnimation).currentTime >= 1.60 || armatureComponent.animation.GetState(jumpRunAnimation).currentTime < 1.25) state = State.JUMP;
         }
+        if(armatureComponent.animation.GetState(jumpRunAnimation)!= null && (armatureComponent.animation.GetState(jumpRunAnimation).currentTime >= 1.60 || armatureComponent.animation.GetState(jumpRunAnimation).currentTime < 1.25)) 
+        {
+            state = State.JUMP;
+            Debug.Log("test");
+            player.IsFail = false;
+        }
+        Debug.Log(armatureComponent.animation.lastAnimationName);
     }
 }

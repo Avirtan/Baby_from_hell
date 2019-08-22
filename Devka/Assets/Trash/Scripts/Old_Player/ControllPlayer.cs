@@ -30,6 +30,7 @@ public class ControllPlayer : MonoBehaviour
     private bool isGlideRight = false;// Проверка на спуск право 
     private bool CastMagic = false; // анимация магии
     private double timerMagic = 0; // Для произносения магии раз в какое то время сек
+    
     void Start()
     {
         player = GetComponent<Rigidbody2D>();

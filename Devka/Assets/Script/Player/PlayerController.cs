@@ -17,6 +17,20 @@ public class PlayerController : MonoBehaviour
     private bool onGround = false;
     private string TagGround = "GROUND";
     private bool isJump = false;
+    private bool isFail = false;
+    public bool IsFail
+    {
+        get
+        {
+            return isFail;
+        }
+ 
+        set
+        {
+            isFail = value;
+        }
+    }
+
     void Start()
     {
         player = GetComponent<Rigidbody2D>();
@@ -64,7 +78,7 @@ public class PlayerController : MonoBehaviour
             }
 
         }
-        if(player.velocity.y == 0)
+        if(player.velocity.y == 0 && !isFail)
             isJump = false;
 
     }
@@ -73,7 +87,7 @@ public class PlayerController : MonoBehaviour
     void ControlAnimation(){
         if(isDeath){
             return;
-        }else if(isJump){
+        }else if(isJump && !isFail){
             sprite.Jump(diraction,speed.x);
         }else if(OnGround()){
             if(isRuning()){
