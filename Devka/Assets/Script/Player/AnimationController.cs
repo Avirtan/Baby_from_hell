@@ -48,22 +48,6 @@ public class AnimationController : MonoBehaviour
 		    }
         }
 	}
-            /* if(direction == 1){
-                if (state != State.IDLE) {
-                    armatureComponent.animation.FadeIn(idleAnimation, 0.1f, -1);
-                    armatureComponent.animation.timeScale = 1f;
-                    state = State.IDLE;
-		        }
-                armatureComponent.armature.flipX = false;
-            }else 
-            {
-                if (state != State.IDLE) {
-                    armatureComponent.animation.FadeIn(idleAnimation, 0.1f, -1);
-                    armatureComponent.animation.timeScale = 1f;
-                    state = State.IDLE;
-		        }
-                armatureComponent.armature.flipX = true;
-            }*/
         
 
     public void Run(float speed,bool shift) {
@@ -79,25 +63,6 @@ public class AnimationController : MonoBehaviour
             else armatureComponent.animation.timeScale = 2f;
         }
 	}
-            /* if(speed > 0){
-                if(state != State.RUN){
-                    animState = armatureComponent.animation.FadeIn(runAnimation, 0f, -1);
-			        state = State.RUN;
-                    animState.currentTime = 0.6f;
-                }
-                if(!shift)armatureComponent.animation.timeScale = 1f;
-                else armatureComponent.animation.timeScale = 2f;
-                armatureComponent.armature.flipX = false;
-            }else{
-                if(state != State.RUN){
-                    armatureComponent.animation.FadeIn(runAnimation, 0f, -1);
-			        armatureComponent.animation.timeScale = 1f;
-			        state = State.RUN;
-                }
-                if(!shift)armatureComponent.animation.timeScale = 1f;
-                else armatureComponent.animation.timeScale = 2f;
-                armatureComponent.armature.flipX = true;
-            }*/
        
 
     public void Jump(int direction,float speed){
@@ -117,35 +82,6 @@ public class AnimationController : MonoBehaviour
             }
         }
     }
-            /* if(direction == 1){
-                if (state != State.JUMP) {
-                    if((speed < -3 && speed >= -7)||(speed > 3 && speed <= 7))
-                        armatureComponent.animation.FadeIn(jumpRunAnimation, 0f, -1);
-                    else if(speed <= -8 || speed >= 8){
-                        armatureComponent.animation.FadeIn(jumpShiftAnimation, 0f, -1);
-                    }
-                    else
-                        armatureComponent.animation.FadeIn(jumpStayAnimation, 0f, -1);
-                    armatureComponent.animation.timeScale = 1f;
-                    state = State.JUMP;
-		        }
-               // Debug.Log(animState.currentTime);
-                armatureComponent.armature.flipX = false;
-            } else 
-            {
-                if (state != State.JUMP) {
-                    if((speed < -3 && speed >= -7)||(speed > 3 && speed <= 7))
-                        armatureComponent.animation.FadeIn(jumpRunAnimation, 0f, -1);
-                    else if(speed <= -8 || speed >= 8){
-                        armatureComponent.animation.FadeIn(jumpShiftAnimation, 0f, -1);
-                    }
-                    else
-                        armatureComponent.animation.FadeIn(jumpStayAnimation, 0f, -1);
-                    armatureComponent.animation.timeScale = 1f;
-                    state = State.JUMP;
-		        }
-                armatureComponent.armature.flipX = true;
-            }*/
        
 
 
