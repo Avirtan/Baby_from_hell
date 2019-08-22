@@ -98,7 +98,7 @@ public class AnimationController : MonoBehaviour
                 
                 if((speed < -3 && speed >= -7)||(speed > 3 && speed <= 7)){ //обычная
                     armatureComponent.animation.Play(jumpRunAnimation, -1);
-                    time = Time.time+1.71;
+                    time = Time.time+1.29;
                 }
                 else if(speed <= -8 || speed >= 8){//во время шифта
                     armatureComponent.animation.Play(jumpShiftAnimation, -1);
@@ -113,10 +113,10 @@ public class AnimationController : MonoBehaviour
         //Debug.Log(armatureComponent.animation.GetState(jumpStayAnimation).weight );
         if(state == State.JUMP && Time.time > time  && state != State.DEAD && state != State.FAIL){
            if(armatureComponent.animation.GetState(jumpShiftAnimation)!=null) //во время шифта
-                armatureComponent.animation.GotoAndStopByFrame(jumpShiftAnimation,31);
+                armatureComponent.animation.GotoAndStopByTime(jumpShiftAnimation,1.71f);
 
            if(armatureComponent.animation.GetState(jumpRunAnimation)!=null) //обычная
-                armatureComponent.animation.GotoAndStopByFrame(jumpRunAnimation,31);
+                armatureComponent.animation.GotoAndStopByTime(jumpRunAnimation,1.29f);
            state = State.FAIL;
         }
         /* if(Time.time > time+2){
