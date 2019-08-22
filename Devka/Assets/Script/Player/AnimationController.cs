@@ -124,7 +124,7 @@ public class AnimationController : MonoBehaviour
             else if (armatureComponent.animation.lastAnimationName == "jump1"){
                 state = State.JUMP;
             }else state = State.FAIL;
-            if(armatureComponent.animation.GetState(jumpRunAnimation).currentTime >= 1.60) state = State.JUMP;
+            if(armatureComponent.animation.GetState(jumpRunAnimation).currentTime >= 1.60 || armatureComponent.animation.GetState(jumpRunAnimation).currentTime < 1.25) state = State.JUMP;
         }
     }
 }
