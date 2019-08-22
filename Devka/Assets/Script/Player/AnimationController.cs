@@ -39,7 +39,16 @@ public class AnimationController : MonoBehaviour
     // Методы для анимации
     public void Idle(int direction) {
         if(state != State.DEAD){
-            if(direction == 1){
+            if(direction ==1)armatureComponent.armature.flipX = false;
+            else armatureComponent.armature.flipX = true;
+            if (state != State.IDLE) {
+                    armatureComponent.animation.FadeIn(idleAnimation, 0.1f, -1);
+                    armatureComponent.animation.timeScale = 1f;
+                    state = State.IDLE;
+		    }
+        }
+	}
+            /* if(direction == 1){
                 if (state != State.IDLE) {
                     armatureComponent.animation.FadeIn(idleAnimation, 0.1f, -1);
                     armatureComponent.animation.timeScale = 1f;
@@ -54,14 +63,23 @@ public class AnimationController : MonoBehaviour
                     state = State.IDLE;
 		        }
                 armatureComponent.armature.flipX = true;
-            }
-        }
-		
-	}
+            }*/
+        
 
     public void Run(float speed,bool shift) {
         if(state !=State.DEAD){
-            if(speed > 0){
+            if(speed > 0)armatureComponent.armature.flipX = false;
+            else  armatureComponent.armature.flipX = true;
+            if(state != State.RUN){
+                    animState = armatureComponent.animation.FadeIn(runAnimation, 0f, -1);
+			        state = State.RUN;
+                    animState.currentTime = 0.6f;
+            }
+            if(!shift)armatureComponent.animation.timeScale = 1f;
+            else armatureComponent.animation.timeScale = 2f;
+        }
+	}
+            /* if(speed > 0){
                 if(state != State.RUN){
                     animState = armatureComponent.animation.FadeIn(runAnimation, 0f, -1);
 			        state = State.RUN;
@@ -79,9 +97,8 @@ public class AnimationController : MonoBehaviour
                 if(!shift)armatureComponent.animation.timeScale = 1f;
                 else armatureComponent.animation.timeScale = 2f;
                 armatureComponent.armature.flipX = true;
-            }
-        }
-	}
+            }*/
+       
 
     public void Jump(int direction,float speed){
         if(state != State.DEAD){
@@ -97,8 +114,9 @@ public class AnimationController : MonoBehaviour
                         armatureComponent.animation.FadeIn(jumpStayAnimation, 0f, -1);
                     armatureComponent.animation.timeScale = 1f;
                     state = State.JUMP;
-		        }
-
+            }
+        }
+    }
             /* if(direction == 1){
                 if (state != State.JUMP) {
                     if((speed < -3 && speed >= -7)||(speed > 3 && speed <= 7))
@@ -128,8 +146,7 @@ public class AnimationController : MonoBehaviour
 		        }
                 armatureComponent.armature.flipX = true;
             }*/
-        }
-    }
+       
 
 
     public void Flip(){
