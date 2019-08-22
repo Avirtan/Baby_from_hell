@@ -21,8 +21,8 @@ public class AnimationController : MonoBehaviour
     private State state = State.IDLE;
 
     private UnityArmatureComponent armatureComponent;
-	private DragonBones.AnimationState aimState = null;
-
+	private DragonBones.AnimationState animState;
+    private DragonBones.AnimationData data;
 	void Start () {
 		armatureComponent = GetComponent<UnityArmatureComponent>();
 	}
@@ -30,7 +30,7 @@ public class AnimationController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       //Debug.Log(armatureComponent.animation.lastAnimationName);
+       //Debug.Log(armatureComponent.TimeScale);
     }
 
 
@@ -61,8 +61,9 @@ public class AnimationController : MonoBehaviour
         if(state !=State.DEAD){
             if(speed > 0){
                 if(state != State.RUN){
-                    armatureComponent.animation.FadeIn(runAnimation, 0f, -1);
+                    animState = armatureComponent.animation.FadeIn(runAnimation, 0f, -1);
 			        state = State.RUN;
+                    animState.currentTime = 0.6f;
                 }
                 if(!shift)armatureComponent.animation.timeScale = 1f;
                 else armatureComponent.animation.timeScale = 2f;

@@ -3130,7 +3130,7 @@ PrefabInstance:
     - target: {fileID: 6091690774304728494, guid: 3f042b7945a3e1d4fb2ceb69c595e01f,
         type: 3}
       propertyPath: animationName
-      value: hardbass
+      value: idle
       objectReference: {fileID: 0}
     - target: {fileID: 6091690774304728498, guid: 3f042b7945a3e1d4fb2ceb69c595e01f,
         type: 3}

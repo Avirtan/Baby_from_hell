@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
     {
         if(!isDeath){
             HandlerMove();
-            HandlerJumo();
+            HandlerJump();
         }
         ControlAnimation();
     }
@@ -48,14 +48,14 @@ public class PlayerController : MonoBehaviour
     }
 
     //управление прыжком
-    void HandlerJumo(){
+    void HandlerJump(){
         if(OnGround() && Input.GetButton("Jump")){
             isJump = true;
             if(moveX != 0){
                 if(diraction == 1)
-                    player.AddForce (new Vector2 (-0.5f, 2f),ForceMode2D.Impulse);
+                    player.AddForce (new Vector2 (-0.5f, 2.4f),ForceMode2D.Impulse);
                 else 
-                    player.AddForce (new Vector2 (0.5f, 2f),ForceMode2D.Impulse);
+                    player.AddForce (new Vector2 (0.5f, 2.2f),ForceMode2D.Impulse);
             }else{
                 if(diraction == 1)
                     player.AddForce (new Vector2 (0f, 2f),ForceMode2D.Impulse);
