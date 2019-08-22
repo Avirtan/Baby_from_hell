@@ -45,14 +45,18 @@ public class PlayerController : MonoBehaviour
             HandlerJump();
         }
         ControlAnimation();
+       // if(Input.GetKey(KeyCode.W)) Debug.Log("w");
+       // Debug.Log(speed.x);
     }
 
 
     // управление движением
     void HandlerMove(){
         //speed = new Vector3 ( player.velocity.x, player.velocity.y, 0f);
+        moveX = 0;
         if(isJump) return;
-        moveX = Input.GetAxis ("Horizontal");
+        if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+            moveX = Input.GetAxis ("Horizontal");
         if(Input.GetButton("Shift") && moveX!=0)
         {
             speed = new Vector3 (moveX * 12, player.velocity.y, 0f);
@@ -78,8 +82,9 @@ public class PlayerController : MonoBehaviour
             }
 
         }
-        if(player.velocity.y == 0 && !isFail)
+        if(player.velocity.y == 0 && !isFail){
             isJump = false;
+        }
 
     }
 

@@ -105,16 +105,16 @@ public class AnimationController : MonoBehaviour
             if(armatureComponent.animation.lastAnimationName == "fall"){
                 armatureComponent.animation.GotoAndPlayByTime(jumpRunAnimation,1.25f);
                // armatureComponent.animation.GetState(jumpRunAnimation).Play();
-                Debug.Log(armatureComponent.animation.GetState(jumpRunAnimation).currentTime);
+               // Debug.Log(armatureComponent.animation.GetState(jumpRunAnimation).currentTime);
                // if(armatureComponent.animation.GetState(jumpRunAnimation).isCompleted) state = State.JUMP;
             }else state = State.FAIL;
         }
         if(armatureComponent.animation.GetState(jumpRunAnimation)!= null && (armatureComponent.animation.GetState(jumpRunAnimation).currentTime >= 1.60 || armatureComponent.animation.GetState(jumpRunAnimation).currentTime < 1.25)) 
         {
             state = State.JUMP;
-            Debug.Log("test");
+           // Debug.Log("test");
             player.IsFail = false;
         }
-        Debug.Log(armatureComponent.animation.lastAnimationName);
+        //Debug.Log(armatureComponent.animation.lastAnimationName);
     }
 }
