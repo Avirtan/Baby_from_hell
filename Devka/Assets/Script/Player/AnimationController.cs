@@ -89,8 +89,10 @@ public class AnimationController : MonoBehaviour
                 if (state != State.JUMP) {
                     if(speed < -3 || speed > 3)
                         armatureComponent.animation.FadeIn(jumpRunAnimation, 0f, -1);
-                    else if(speed <= -11 || speed >= 11)
+                    else if(speed <= -11 || speed >= 11){
                         armatureComponent.animation.FadeIn(jumpShiftAnimation, 0f, -1);
+                        Debug.Log("test");
+                    }
                     else
                         armatureComponent.animation.FadeIn(jumpStayAnimation, 0f, -1);
                     armatureComponent.animation.timeScale = 1f;
@@ -100,10 +102,12 @@ public class AnimationController : MonoBehaviour
             }else 
             {
                 if (state != State.JUMP) {
-                    if(speed < -3 || speed > 3)
+                    if((speed < -3 && speed > -5)||(speed > 3 && speed < 5))
                         armatureComponent.animation.FadeIn(jumpRunAnimation, 0f, -1);
-                    else if(speed <= -11 || speed >= 11)
+                    else if(speed <= -11 || speed >= 11){
                         armatureComponent.animation.FadeIn(jumpShiftAnimation, 0f, -1);
+                        Debug.Log("test");
+                    }
                     else
                         armatureComponent.animation.FadeIn(jumpStayAnimation, 0f, -1);
                     armatureComponent.animation.timeScale = 1f;

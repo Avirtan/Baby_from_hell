@@ -31,7 +31,6 @@ public class PlayerController : MonoBehaviour
             HandlerJump();
         }
         ControlAnimation();
-        Debug.Log(speed.x);
     }
 
 
