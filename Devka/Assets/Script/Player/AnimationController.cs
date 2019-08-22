@@ -10,7 +10,9 @@ public class AnimationController : MonoBehaviour
 
 	public string runAnimation = "running";
 
-	public string jumpAnimation = "jumpRun";
+	public string jumpRunAnimation = "jump2";
+    public string jumpStayAnimation = "jump1";
+    public string jumpShiftAnimation = "jump3";
 	public string glideAnimation = "Glide";
 
 	public string dieAnimation = "Die";
@@ -81,11 +83,16 @@ public class AnimationController : MonoBehaviour
         }
 	}
 
-    public void Jump(int direction){
+    public void Jump(int direction,float speed){
         if(state != State.DEAD){
             if(direction == 1){
                 if (state != State.JUMP) {
-                    armatureComponent.animation.FadeIn(jumpAnimation, 0f, -1);
+                    if(speed < -3 || speed > 3)
+                        armatureComponent.animation.FadeIn(jumpRunAnimation, 0f, -1);
+                    else if(speed <= -11 || speed >= 11)
+                        armatureComponent.animation.FadeIn(jumpShiftAnimation, 0f, -1);
+                    else
+                        armatureComponent.animation.FadeIn(jumpStayAnimation, 0f, -1);
                     armatureComponent.animation.timeScale = 1f;
                     state = State.JUMP;
 		        }
@@ -93,7 +100,12 @@ public class AnimationController : MonoBehaviour
             }else 
             {
                 if (state != State.JUMP) {
-                    armatureComponent.animation.FadeIn(jumpAnimation, 0f, -1);
+                    if(speed < -3 || speed > 3)
+                        armatureComponent.animation.FadeIn(jumpRunAnimation, 0f, -1);
+                    else if(speed <= -11 || speed >= 11)
+                        armatureComponent.animation.FadeIn(jumpShiftAnimation, 0f, -1);
+                    else
+                        armatureComponent.animation.FadeIn(jumpStayAnimation, 0f, -1);
                     armatureComponent.animation.timeScale = 1f;
                     state = State.JUMP;
 		        }
@@ -101,6 +113,8 @@ public class AnimationController : MonoBehaviour
             }
         }
     }
+
+
     public void Flip(){
         armatureComponent.armature.flipX = true;
     }

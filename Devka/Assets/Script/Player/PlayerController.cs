@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
             HandlerJump();
         }
         ControlAnimation();
+        Debug.Log(speed.x);
     }
 
 
@@ -51,12 +52,12 @@ public class PlayerController : MonoBehaviour
     void HandlerJump(){
         if(OnGround() && Input.GetButton("Jump")){
             isJump = true;
-            if(moveX != 0){
+            if(speed.x < -3 || speed.x > 3){
                 if(diraction == 1)
                     player.AddForce (new Vector2 (-0.5f, 2.4f),ForceMode2D.Impulse);
                 else 
                     player.AddForce (new Vector2 (0.5f, 2.4f),ForceMode2D.Impulse);
-            }else{
+            }else if(moveX ==0){
                 if(diraction == 1)
                     player.AddForce (new Vector2 (0f, 2f),ForceMode2D.Impulse);
                 else 
@@ -74,7 +75,7 @@ public class PlayerController : MonoBehaviour
         if(isDeath){
             return;
         }else if(isJump){
-            sprite.Jump(diraction);
+            sprite.Jump(diraction,speed.x);
         }else if(OnGround()){
             if(isRuning()){
                 sprite.Run(moveX,Input.GetButton("Shift"));
