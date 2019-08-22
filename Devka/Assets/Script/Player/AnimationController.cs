@@ -18,7 +18,7 @@ public class AnimationController : MonoBehaviour
 	public string dieAnimation = "Die";
 	public string attackAnimation = "Attack";
 
-    enum State {IDLE, RUN,SHOOT,JUMP,DEAD};
+    enum State {IDLE, RUN,SHOOT,JUMP,DEAD,FAIL};
     private State state = State.IDLE;
 
     private double time;
@@ -66,24 +66,29 @@ public class AnimationController : MonoBehaviour
        
 
     public void Jump(int direction,float speed){
-        if(state != State.DEAD){
+        if(state != State.DEAD && state != State.FAIL){
             if(direction == 1) armatureComponent.armature.flipX = false;
             else armatureComponent.armature.flipX = true;
             if (state != State.JUMP) {
-                time = Time.time+1.5;
+                time = Time.time+1;
                 if((speed < -3 && speed >= -7)||(speed > 3 && speed <= 7))
-                    armatureComponent.animation.FadeIn(jumpRunAnimation, 0f, -1);
+                    armatureComponent.animation.FadeIn(jumpRunAnimation, -1f, 0);
                 else if(speed <= -8 || speed >= 8){
-                    armatureComponent.animation.FadeIn(jumpShiftAnimation, 0f, -1);
+                    armatureComponent.animation.FadeIn(jumpShiftAnimation, -1f, 0);
                 }
                 else
-                    armatureComponent.animation.FadeIn(jumpStayAnimation, 0f, -1);
+                    armatureComponent.animation.FadeIn(jumpStayAnimation, -1f, 0);
                 armatureComponent.animation.timeScale = 1f;
                 state = State.JUMP;
             }
         }
-        if(state == State.JUMP && Time.time > time && state != State.DEAD){
-            armatureComponent.animation.GotoAndPlayByFrame(jumpRunAnimation,60,0);
+        if(state == State.JUMP && Time.time > time +1 && state != State.DEAD && state != State.FAIL){
+           armatureComponent.animation.GotoAndPlayByFrame(jumpRunAnimation,70,0);
+           Debug.Log("test");	
+           state = State.FAIL;
+          // Debug.Log(animState.isCompleted);
+          // armatureComponent.animation.GotoAndPlayByTime(jumpRunAnimation,1.2f);
         }
+        //Debug.Log(armatureComponent.animation.isCompleted );
     }
 }
