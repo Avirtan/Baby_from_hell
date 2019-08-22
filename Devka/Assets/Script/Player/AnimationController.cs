@@ -43,7 +43,7 @@ public class AnimationController : MonoBehaviour
                 armatureComponent.animation.GetState(jumpShiftAnimation).Play();
                 if(armatureComponent.animation.GetState(jumpShiftAnimation).isCompleted) state = State.JUMP;
             }
-            if(armatureComponent.animation.GetState(jumpRunAnimation)!=null){
+            else if(armatureComponent.animation.GetState(jumpRunAnimation)!=null){
                 armatureComponent.animation.GetState(jumpRunAnimation).Play();
                 if(armatureComponent.animation.GetState(jumpRunAnimation).isCompleted) state = State.JUMP;
             }
@@ -67,7 +67,7 @@ public class AnimationController : MonoBehaviour
                 armatureComponent.animation.GetState(jumpShiftAnimation).Play();
                 if(armatureComponent.animation.GetState(jumpShiftAnimation).isCompleted) state = State.JUMP;
             }
-            if(armatureComponent.animation.GetState(jumpRunAnimation)!=null){
+            else if(armatureComponent.animation.GetState(jumpRunAnimation)!=null){
                 armatureComponent.animation.GetState(jumpRunAnimation).Play();
                 if(armatureComponent.animation.GetState(jumpRunAnimation).isCompleted) state = State.JUMP;
             }
