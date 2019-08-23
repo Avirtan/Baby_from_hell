@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent (typeof (AnimationController))]
-public class PlayerController : MonoBehaviour
+public class PlayerController_save : MonoBehaviour
 {
     public Transform groundCheck; // зона снизу
-    public Transform wallCheckLeft; // зона слева
-    public Transform wallCheckRight; // зона справа
 
 
     protected AnimationController sprite;
@@ -47,6 +45,8 @@ public class PlayerController : MonoBehaviour
             HandlerJump();
         }
         ControlAnimation();
+       // if(Input.GetKey(KeyCode.W)) Debug.Log("w");
+      // Debug.Log(isFail);
     }
 
 
@@ -70,11 +70,15 @@ public class PlayerController : MonoBehaviour
         if(OnGround() && Input.GetButton("Jump")){
             isJump = true;
             if(speed.x < -3 || speed.x > 3){
-                if(diraction == 1)player.AddForce (new Vector2 (70, 160f));
-                else player.AddForce(new Vector2 (-70, 160f));
+                if(diraction == 1)
+                    player.AddForce (new Vector2 (-0.5f, 2.4f),ForceMode2D.Impulse);
+                else 
+                    player.AddForce (new Vector2 (0.5f, 2.4f),ForceMode2D.Impulse);
             }else if(moveX ==0){
-                if(diraction == 1) player.AddForce (new Vector2 (0f, 100f));
-                else player.AddForce (new Vector2 (0f, 100f));
+                if(diraction == 1)
+                    player.AddForce (new Vector2 (0f, 2f),ForceMode2D.Impulse);
+                else 
+                    player.AddForce (new Vector2 (0f, 2f),ForceMode2D.Impulse);
             }
 
         }
@@ -84,7 +88,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    
+
     void ControlAnimation(){
         if(isDeath){
             return;

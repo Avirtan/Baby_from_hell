@@ -640,14 +640,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotNames:
-  - "\u0440\u0443\u043A\u0430\u041B"
   - "\u043D\u043E\u0433\u0430\u041B1"
   - "\u043D\u043E\u0433\u0430\u041F1"
   - "\u043A\u043E\u0444\u0442\u0430"
   - "\u043A\u043E\u0441\u0430\u041B"
   - "\u043A\u043E\u0441\u0430\u041F"
   - "\u0433\u043E\u043B\u043E\u0432\u0430"
-  - "\u0440\u0443\u043A\u0430\u041F"
   dirty: 0
 --- !u!50 &6091690774304728498
 Rigidbody2D:
@@ -743,6 +741,7 @@ MonoBehaviour:
   jumpStayAnimation: jump1
   jumpShiftAnimation: jump3
   glideAnimation: Glide
+  failAnimation: fall
   dieAnimation: Die
   attackAnimation: Attack
 --- !u!70 &6091690774304728503
@@ -964,7 +963,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8699398430384726961
 Transform:
   m_ObjectHideFlags: 0
@@ -1042,7 +1041,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &750229592788829561
 Transform:
   m_ObjectHideFlags: 0

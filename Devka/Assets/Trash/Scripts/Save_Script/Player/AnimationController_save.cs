@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DragonBones;
 
-public class AnimationController : MonoBehaviour
+public class AnimationController_save : MonoBehaviour
 {
     // Start is called before the first frame update
     public string idleAnimation = "idle";
@@ -34,7 +34,7 @@ public class AnimationController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      //Debug.Log(player.IsFail);
+        //Debug.Log(player.IsFail);
       //Debug.Log(armatureComponent.animation.GetState(jumpRunAnimation)._animationData.frameCount);
     }
 
@@ -75,9 +75,13 @@ public class AnimationController : MonoBehaviour
             if(direction == 1) armatureComponent.armature.flipX = false;
             else armatureComponent.armature.flipX = true;
             if (state != State.JUMP) {
-                if(speed != 0){ 
+                if((speed < -3 && speed >= -7)||(speed > 3 && speed <= 7)){ //обычная
                     armatureComponent.animation.Play(jumpRunAnimation, -1);
                     time = Time.time+1.25;
+                }
+                else if(speed <= -8 || speed >= 8){//во время шифта
+                    armatureComponent.animation.Play(jumpShiftAnimation, -1);
+                    time = Time.time+1.67;
                 }
                 else
                     armatureComponent.animation.Play(jumpStayAnimation, -1);
@@ -85,6 +89,7 @@ public class AnimationController : MonoBehaviour
                 state = State.JUMP;
             }
         }
+        //Debug.Log(armatureComponent.animation.GetState(jumpStayAnimation).weight );
         if(state == State.JUMP && Time.time > time  && state != State.DEAD && state != State.FAIL){
            if(armatureComponent.animation.GetState(jumpShiftAnimation)!=null || armatureComponent.animation.GetState(jumpRunAnimation)!=null){//во время шифта
                armatureComponent.animation.FadeIn("fall", 0f,-1); 
@@ -95,14 +100,24 @@ public class AnimationController : MonoBehaviour
     }
 
     public void Fail(){
-        if((armatureComponent.animation.lastAnimationName == "jump2"  || armatureComponent.animation.lastAnimationName == "fall") && state != State.LANDING){
+        if((armatureComponent.animation.lastAnimationName == "jump2" || armatureComponent.animation.lastAnimationName == "jump3" || armatureComponent.animation.lastAnimationName == "fall") && state != State.LANDING){
             state = State.LANDING;
             armatureComponent.animation.GotoAndPlayByTime(jumpRunAnimation,1.25f);
+            Debug.Log("land");
         }
+       /*  if(state == State.FAIL){
+            if(armatureComponent.animation.lastAnimationName == "fall"){
+                armatureComponent.animation.GotoAndPlayByTime(jumpRunAnimation,1.25f);
+               // armatureComponent.animation.GetState(jumpRunAnimation).Play();
+               // Debug.Log(armatureComponent.animation.GetState(jumpRunAnimation).currentTime);
+               // if(armatureComponent.animation.GetState(jumpRunAnimation).isCompleted) state = State.JUMP;
+            }else state = State.FAIL;
+        }*/
         if(armatureComponent.animation.GetState(jumpRunAnimation)!= null && (armatureComponent.animation.GetState(jumpRunAnimation).currentTime >= 1.60 || armatureComponent.animation.GetState(jumpRunAnimation).currentTime < 1.25)) 
         {
             state = State.JUMP;
             player.IsFail = false;
         }
+        //Debug.Log(armatureComponent.animation.lastAnimationName);
     }
 }
