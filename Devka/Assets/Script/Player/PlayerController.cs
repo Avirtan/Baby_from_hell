@@ -8,7 +8,8 @@ public class PlayerController : MonoBehaviour
     public Transform groundCheck; // зона снизу
     public Transform wallCheckLeft; // зона слева
     public Transform wallCheckRight; // зона справа
-
+    public float airAcceleration = 2f; // сопротивление воздуха
+    public float speedX = 12;
 
     protected AnimationController sprite;
     private Vector3 speed;
@@ -37,6 +38,7 @@ public class PlayerController : MonoBehaviour
     {
         player = GetComponent<Rigidbody2D>();
         sprite = GetComponent<AnimationController>();
+        //player.transform.rotation = Quaternion.Euler(0,90,0);
     }
 
     // Update is called once per frame
@@ -78,6 +80,27 @@ public class PlayerController : MonoBehaviour
             }
 
         }
+        if(!OnGround() &&  player.velocity.y < 0 && OnWall()!=0){
+            speed = new Vector3 (moveX * 12, -1f, 0f);
+            if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+                 moveX = Input.GetAxis ("Horizontal");
+            // нажатие пробела на стене
+            if( Input.GetButton("Jump"))
+            {
+                Debug.Log(moveX);
+                // прыжок от левой стены
+                if (OnWall()==-1 && moveX > 0) {
+                    player.velocity = Vector2.zero;
+                    player.AddForce(new Vector2(moveX * 80 * airAcceleration * 7, 50 * airAcceleration * 7));
+                }
+                // прыжок от правой стены
+                else if (OnWall()==1 && moveX < 0)
+                {
+                    player.velocity = Vector2.zero;
+                    player.AddForce(new Vector2(moveX * 80 * airAcceleration * 7, 50 * airAcceleration * 7));
+                }
+            }
+        }
         if(player.velocity.y == 0 && !isFail){
             isJump = false;
         }
@@ -108,6 +131,18 @@ public class PlayerController : MonoBehaviour
         return onGround;
     }
 
+    // 0 = нет или с 2 сторон, 1 - правая, -1 - левая
+    int OnWall(){
+        bool wallLeft = Physics2D.Linecast(transform.position, wallCheckLeft.position,(1<<10));
+        bool wallRight = Physics2D.Linecast(transform.position, wallCheckRight.position,(1<<10));
+        if(wallLeft && wallRight)
+            return 0;
+        else if(wallRight)
+            return 1;
+        else if(wallLeft)
+            return -1;
+        return 0;
+    }
 
     /*
     protected virtual void OnCollisionStay2D(Collision2D collision) {
