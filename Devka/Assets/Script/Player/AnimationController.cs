@@ -18,7 +18,7 @@ public class AnimationController : MonoBehaviour
 	public string dieAnimation = "Die";
 	public string attackAnimation = "Attack";
 
-    enum State {IDLE, RUN,SHOOT,JUMP,DEAD,FAIL};
+    enum State {IDLE, RUN,SHOOT,JUMP,DEAD,FAIL,LANDING};
     private State state = State.IDLE;
 
     private double time;
@@ -42,7 +42,7 @@ public class AnimationController : MonoBehaviour
     // Методы для анимации
     public void Idle(int direction) {
         Fail();
-        if(state != State.DEAD && state != State.FAIL){
+        if(state != State.DEAD && state != State.LANDING){
             if(direction ==1)armatureComponent.armature.flipX = false;
             else armatureComponent.armature.flipX = true;
             if (state != State.IDLE) {
@@ -56,7 +56,7 @@ public class AnimationController : MonoBehaviour
 
     public void Run(float speed,bool shift) {
         Fail();
-        if(state !=State.DEAD  && state != State.FAIL){
+        if(state !=State.DEAD  && state != State.LANDING){
             if(speed > 0)armatureComponent.armature.flipX = false;
             else  armatureComponent.armature.flipX = true;
             if(state != State.RUN){
@@ -75,7 +75,6 @@ public class AnimationController : MonoBehaviour
             if(direction == 1) armatureComponent.armature.flipX = false;
             else armatureComponent.armature.flipX = true;
             if (state != State.JUMP) {
-                
                 if((speed < -3 && speed >= -7)||(speed > 3 && speed <= 7)){ //обычная
                     armatureComponent.animation.Play(jumpRunAnimation, -1);
                     time = Time.time+1.25;
@@ -101,18 +100,22 @@ public class AnimationController : MonoBehaviour
     }
 
     public void Fail(){
-        if(state == State.FAIL){
+        if((armatureComponent.animation.lastAnimationName == "jump2" || armatureComponent.animation.lastAnimationName == "jump3" || armatureComponent.animation.lastAnimationName == "fall") && state != State.LANDING){
+            state = State.LANDING;
+            armatureComponent.animation.GotoAndPlayByTime(jumpRunAnimation,1.25f);
+            Debug.Log("land");
+        }
+       /*  if(state == State.FAIL){
             if(armatureComponent.animation.lastAnimationName == "fall"){
                 armatureComponent.animation.GotoAndPlayByTime(jumpRunAnimation,1.25f);
                // armatureComponent.animation.GetState(jumpRunAnimation).Play();
                // Debug.Log(armatureComponent.animation.GetState(jumpRunAnimation).currentTime);
                // if(armatureComponent.animation.GetState(jumpRunAnimation).isCompleted) state = State.JUMP;
             }else state = State.FAIL;
-        }
+        }*/
         if(armatureComponent.animation.GetState(jumpRunAnimation)!= null && (armatureComponent.animation.GetState(jumpRunAnimation).currentTime >= 1.60 || armatureComponent.animation.GetState(jumpRunAnimation).currentTime < 1.25)) 
         {
             state = State.JUMP;
-           // Debug.Log("test");
             player.IsFail = false;
         }
         //Debug.Log(armatureComponent.animation.lastAnimationName);

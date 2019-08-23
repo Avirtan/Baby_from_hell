@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
         }
         ControlAnimation();
        // if(Input.GetKey(KeyCode.W)) Debug.Log("w");
-       // Debug.Log(speed.x);
+      // Debug.Log(isFail);
     }
 
 
