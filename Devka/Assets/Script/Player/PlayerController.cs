@@ -84,17 +84,14 @@ public class PlayerController : MonoBehaviour
             speed = new Vector3 (moveX * 12, -1f, 0f);
             if( Input.GetButton("Jump"))
             {
-                Debug.Log(moveX);
                 if (OnWall()==-1 && moveX > 0) {
                     player.velocity = Vector2.zero;
                     player.AddForce(new Vector2(moveX * 80 * airAcceleration * 7, 50 * airAcceleration * 7));
-                    //sprite.FlipX(false);
                 }
                 else if (OnWall()==1 && moveX < 0)
                 {
                     player.velocity = Vector2.zero;
                     player.AddForce(new Vector2(moveX * 80 * airAcceleration * 7, 50 * airAcceleration * 7));
-                   // sprite.FlipX(true);
                 }
             }
         }
@@ -109,12 +106,13 @@ public class PlayerController : MonoBehaviour
         if(isDeath){
             return;
         }else if(isJump && !isFail){
-            sprite.Jump(diraction,speed.x);
+            if(player.velocity.y > 0)sprite.Jump(diraction,speed.x);
+            if(player.velocity.y < 0) sprite.Fall();
         }else if(OnGround()){
             if(isRuning()){
-                sprite.Run(moveX,Input.GetButton("Shift"));
+                sprite.Run(Input.GetButton("Shift"));
             }else{
-                sprite.Idle(diraction);
+                sprite.Idle();
             }
         }
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent (typeof (AnimationController))]
 public class PlayerController_save : MonoBehaviour
 {
-    public Transform groundCheck; // зона снизу
+    /* public Transform groundCheck; // зона снизу
 
 
     protected AnimationController sprite;

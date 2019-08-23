@@ -142,6 +142,7 @@ public class ControllPlayer : MonoBehaviour
                 if (isWallLeft && moveX > 0) {
                     player.velocity = Vector2.zero;
                     player.AddForce(new Vector2(moveX * 80 * airAcceleration * 7, 50 * airAcceleration * 7));
+                    
                 }
                 // прыжок от правой стены
                 else if (isWallRight && moveX < 0)

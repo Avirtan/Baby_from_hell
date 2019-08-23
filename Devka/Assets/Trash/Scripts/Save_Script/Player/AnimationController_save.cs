@@ -5,7 +5,7 @@ using DragonBones;
 
 public class AnimationController_save : MonoBehaviour
 {
-    // Start is called before the first frame update
+   /*  // Start is called before the first frame update
     public string idleAnimation = "idle";
 
 	public string runAnimation = "running";
@@ -112,12 +112,12 @@ public class AnimationController_save : MonoBehaviour
                // Debug.Log(armatureComponent.animation.GetState(jumpRunAnimation).currentTime);
                // if(armatureComponent.animation.GetState(jumpRunAnimation).isCompleted) state = State.JUMP;
             }else state = State.FAIL;
-        }*/
+        }//
         if(armatureComponent.animation.GetState(jumpRunAnimation)!= null && (armatureComponent.animation.GetState(jumpRunAnimation).currentTime >= 1.60 || armatureComponent.animation.GetState(jumpRunAnimation).currentTime < 1.25)) 
         {
             state = State.JUMP;
             player.IsFail = false;
         }
         //Debug.Log(armatureComponent.animation.lastAnimationName);
-    }
+    }*/
 }
