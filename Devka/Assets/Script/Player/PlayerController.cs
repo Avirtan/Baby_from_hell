@@ -56,7 +56,6 @@ public class PlayerController : MonoBehaviour
     void HandlerMove(){
         //speed = new Vector3 ( player.velocity.x, player.velocity.y, 0f);
         moveX = 0;
-        if(isJump) return;
         if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
             moveX = Input.GetAxis ("Horizontal");
         if(Input.GetButton("Shift") && moveX!=0)
@@ -64,6 +63,7 @@ public class PlayerController : MonoBehaviour
             speed = new Vector3 (moveX * 12, player.velocity.y, 0f);
         }else speed = new Vector3 (moveX * 7, player.velocity.y, 0f);
         diraction = moveX != 0 ?(moveX>0?diraction = 1:diraction=-1):diraction;
+        sprite.FlipX(diraction);
         player.velocity = speed;
     }
 
@@ -82,22 +82,19 @@ public class PlayerController : MonoBehaviour
         }
         if(!OnGround() &&  player.velocity.y < 0 && OnWall()!=0){
             speed = new Vector3 (moveX * 12, -1f, 0f);
-            if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
-                 moveX = Input.GetAxis ("Horizontal");
-            // нажатие пробела на стене
             if( Input.GetButton("Jump"))
             {
                 Debug.Log(moveX);
-                // прыжок от левой стены
                 if (OnWall()==-1 && moveX > 0) {
                     player.velocity = Vector2.zero;
                     player.AddForce(new Vector2(moveX * 80 * airAcceleration * 7, 50 * airAcceleration * 7));
+                    //sprite.FlipX(false);
                 }
-                // прыжок от правой стены
                 else if (OnWall()==1 && moveX < 0)
                 {
                     player.velocity = Vector2.zero;
                     player.AddForce(new Vector2(moveX * 80 * airAcceleration * 7, 50 * airAcceleration * 7));
+                   // sprite.FlipX(true);
                 }
             }
         }

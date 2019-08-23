@@ -105,4 +105,9 @@ public class AnimationController : MonoBehaviour
             player.IsFail = false;
         }
     }
+
+    public void FlipX(int flip){
+        if(flip == 1)armatureComponent.armature.flipX = false;
+        else armatureComponent.armature.flipX = true;
+    }
 }
