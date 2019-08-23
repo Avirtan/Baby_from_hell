@@ -19,25 +19,11 @@ public class PlayerController : MonoBehaviour
     private bool isDeath = false;
     private string TagGround = "GROUND";
     private bool isJump = false;
-    private bool isFail = false;
-    public bool IsFail
-    {
-        get
-        {
-            return isFail;
-        }
- 
-        set
-        {
-            isFail = value;
-        }
-    }
 
     void Start()
     {
         player = GetComponent<Rigidbody2D>();
         sprite = GetComponent<AnimationController>();
-        //player.transform.rotation = Quaternion.Euler(0,90,0);
     }
 
     // Update is called once per frame
@@ -48,7 +34,7 @@ public class PlayerController : MonoBehaviour
             HandlerJump();
         }
         ControlAnimation();
-        //Debug.Log(player.velocity.y);
+        Debug.Log(player.velocity.y);
     }
 
 
@@ -69,7 +55,7 @@ public class PlayerController : MonoBehaviour
     //управление прыжком
     void HandlerJump(){
         if(OnGround() && Input.GetButton("Jump")){
-            isJump = true;
+            
             if(speed.x < -3 || speed.x > 3){
                 if(diraction == 1)player.AddForce (new Vector2 (70, 160f));
                 else player.AddForce(new Vector2 (-70, 160f));
@@ -81,22 +67,25 @@ public class PlayerController : MonoBehaviour
         }
         if(!OnGround() &&  player.velocity.y < 0 && OnWall()!=0){
             speed = new Vector3 (moveX * 12, -1f, 0f);
-            if( Input.GetButton("Jump"))
+            if(Input.GetButton("Jump"))
             {
                 if (OnWall()==-1 && moveX > 0) {
                     player.velocity = Vector2.zero;
                     player.AddForce(new Vector2(moveX * 80 * airAcceleration * 7, 50 * airAcceleration * 7));
-                    isJump = true;
+                    //isJump = true;
                 }
                 else if (OnWall()==1 && moveX < 0)
                 {
                     player.velocity = Vector2.zero;
                     player.AddForce(new Vector2(moveX * 80 * airAcceleration * 7, 50 * airAcceleration * 7));
-                    isJump = true;
+                   // isJump = true;
                 }
             }
         }
-        if(player.velocity.y == 0 && OnGround()){ //&& !isFail){
+        if((player.velocity.y > 1 || player.velocity.y <-2)&& Input.GetButton("Jump")){
+            isJump = true;
+        }
+        if(player.velocity.y == 0 && OnGround()){ 
             isJump = false;
         }
 
@@ -106,11 +95,11 @@ public class PlayerController : MonoBehaviour
     void ControlAnimation(){
         if(isDeath){
             return;
-        }else if(OnWall()!=0 && !OnGround()){
-            sprite.Slide();
+        }else if(OnWall()==diraction && !OnGround()){
+            sprite.Slide(diraction,OnWall());
         }else if(isJump){
             if(player.velocity.y > 0) sprite.Jump(diraction,speed.x);
-            if(player.velocity.y < 0) sprite.Fall();
+            if(player.velocity.y < -8) {sprite.Fall();} 
         }else if(OnGround()){
             if(isRuning()){
                 sprite.Run(Input.GetButton("Shift"));

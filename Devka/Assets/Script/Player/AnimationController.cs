@@ -68,10 +68,7 @@ public class AnimationController : MonoBehaviour
        
 
     public void Jump(int direction,float speed){
-        //Debug.Log("Jump");
         if(state != State.DEAD && state != State.FAIL){
-            //if(direction == 1) armatureComponent.armature.flipX = false;
-            //else armatureComponent.armature.flipX = true;
             if (state != State.JUMP) {
                 if(speed != 0){ 
                     armatureComponent.animation.Play(jumpRunAnimation, -1);
@@ -87,23 +84,9 @@ public class AnimationController : MonoBehaviour
     }
 
     public void Fall(){
-        //Debug.Log("Fall");
-       /*  if((armatureComponent.animation.lastAnimationName == "jump2"  || armatureComponent.animation.lastAnimationName == "fall") && state != State.LANDING){
-            state = State.LANDING;
-            armatureComponent.animation.GotoAndPlayByTime(jumpRunAnimation,1.25f);
-        }
-        if(armatureComponent.animation.GetState(jumpRunAnimation)!= null && (armatureComponent.animation.GetState(jumpRunAnimation).currentTime >= 1.60 || armatureComponent.animation.GetState(jumpRunAnimation).currentTime < 1.25)) 
-        {
-            state = State.JUMP;
-            player.IsFail = false;
-        }*/
-        //if(state == State.JUMP && Time.time > time  && state != State.DEAD && state != State.FAIL){
-        if(state == State.JUMP && state != State.FAIL){
-           if(armatureComponent.animation.GetState(jumpRunAnimation)!=null || armatureComponent.animation.GetState(jumpRunAnimation)!=null){//во время шифта
+        if((state == State.JUMP || state == State.SLIDE) && state != State.FAIL){
                armatureComponent.animation.FadeIn("fall", 0f,-1); 
                state = State.FAIL;
-               //player.IsFail = true;
-           }
         }
     }
 
@@ -117,16 +100,16 @@ public class AnimationController : MonoBehaviour
         if(armatureComponent.animation.GetState(jumpRunAnimation)!= null && (armatureComponent.animation.GetState(jumpRunAnimation).currentTime >= 1.60 || armatureComponent.animation.GetState(jumpRunAnimation).currentTime < 1.25)) 
         {
             state = State.JUMP;
-            //player.IsFail = false;
         }
     }
 
-    public void Slide(){
-        //Debug.Log("Slide");
+    public void Slide(int direction,int wall){
         if(state != State.SLIDE && state != State.DEAD){
+            if((armatureComponent.armature.flipX && wall==-1)||(!armatureComponent.armature.flipX && wall==1)){
             armatureComponent.animation.FadeIn(slideAnimation, 0.1f, -1);
             armatureComponent.animation.timeScale = 1f;
             state = State.SLIDE;
+            }
         }
     }
 
