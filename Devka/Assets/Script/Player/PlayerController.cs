@@ -17,7 +17,6 @@ public class PlayerController : MonoBehaviour
     private float moveX = 0;
     private int diraction = 1;
     private bool isDeath = false;
-    private bool onGround = false;
     private string TagGround = "GROUND";
     private bool isJump = false;
     private bool isFail = false;
@@ -49,12 +48,12 @@ public class PlayerController : MonoBehaviour
             HandlerJump();
         }
         ControlAnimation();
+        //Debug.Log(player.velocity.y);
     }
 
 
     // управление движением
     void HandlerMove(){
-        //speed = new Vector3 ( player.velocity.x, player.velocity.y, 0f);
         moveX = 0;
         if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
             moveX = Input.GetAxis ("Horizontal");
@@ -87,15 +86,17 @@ public class PlayerController : MonoBehaviour
                 if (OnWall()==-1 && moveX > 0) {
                     player.velocity = Vector2.zero;
                     player.AddForce(new Vector2(moveX * 80 * airAcceleration * 7, 50 * airAcceleration * 7));
+                    isJump = true;
                 }
                 else if (OnWall()==1 && moveX < 0)
                 {
                     player.velocity = Vector2.zero;
                     player.AddForce(new Vector2(moveX * 80 * airAcceleration * 7, 50 * airAcceleration * 7));
+                    isJump = true;
                 }
             }
         }
-        if(player.velocity.y == 0 && !isFail){
+        if(player.velocity.y == 0 && OnGround()){ //&& !isFail){
             isJump = false;
         }
 
@@ -105,8 +106,10 @@ public class PlayerController : MonoBehaviour
     void ControlAnimation(){
         if(isDeath){
             return;
-        }else if(isJump && !isFail){
-            if(player.velocity.y > 0)sprite.Jump(diraction,speed.x);
+        }else if(OnWall()!=0 && !OnGround()){
+            sprite.Slide();
+        }else if(isJump){
+            if(player.velocity.y > 0) sprite.Jump(diraction,speed.x);
             if(player.velocity.y < 0) sprite.Fall();
         }else if(OnGround()){
             if(isRuning()){
@@ -122,7 +125,7 @@ public class PlayerController : MonoBehaviour
     }
 
     bool OnGround(){
-        onGround = Physics2D.Linecast(transform.position, groundCheck.position,(1<<10));
+        bool onGround = Physics2D.Linecast(transform.position, groundCheck.position,(1<<10));
         return onGround;
     }
 
