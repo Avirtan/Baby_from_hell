@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
             player.velocity = speed;
         }
         ControlAnimation();
-        Debug.Log(player.velocity.y);
+        //Debug.Log(player.velocity.y);
     }
 
     // управление движением
@@ -72,14 +72,14 @@ public class PlayerController : MonoBehaviour
                 if(Input.GetAxis ("Horizontal") > 0 && Input.GetButton("Jump")){
                     //player.AddForce(new Vector2(-moveX * 80 * airAcceleration * 7, 50 * airAcceleration * 7));
                     player.velocity = Vector2.zero;
-                    player.AddForce(new Vector2(-600,800));
-                    speed = new Vector3(moveX * 7, player.velocity.y, 0f);
+                    player.AddForce(new Vector2(0,800));
+                    //speed = new Vector3(moveX * 7, player.velocity.y, 0f);
                 }
                 if(Input.GetAxis ("Horizontal") < 0 && Input.GetButton("Jump")){
                     //player.AddForce(new Vector2(moveX * 80 * airAcceleration * 7, 50 * airAcceleration * 7));
                     player.velocity = Vector2.zero;
-                    player.AddForce(new Vector2(600,800));
-                    speed = new Vector3(moveX * 7, player.velocity.y, 0f);
+                    player.AddForce(new Vector2(0,800));
+                    //speed = new Vector3(moveX * 7, player.velocity.y, 0f);
                 }
             }
             if(Time.time > time && time!=0){
@@ -93,12 +93,13 @@ public class PlayerController : MonoBehaviour
     void ControlAnimation(){
         if(isDeath){
             return;
-        }else if(IsJump() && player.velocity.y<0 && OnWall()!=0 && time!=-1){
-            if(OnWall()==Diration())sprite.Slide();
-            else sprite.Fall();
+        }else if(IsJump() && player.velocity.y<0 && OnWall()!=0 && time!=-1 && OnWall()==Diration()){
+            //if(OnWall()==Diration())
+            sprite.Slide();
+            //else sprite.Fall(player.velocity.y);
         }else if(IsJump()){
-            if(player.velocity.y > 0) sprite.Jump(diraction,speed.x);
-            if(player.velocity.y < 0) {sprite.Fall();} 
+            if(player.velocity.y > 0) sprite.Jump(player.velocity.y);
+            if(player.velocity.y < 0) {sprite.Fall(player.velocity.y);} 
         }else if(OnGround()){
             if(isRuning()){
                 sprite.Run(Input.GetButton("Shift"));

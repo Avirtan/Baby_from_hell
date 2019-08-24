@@ -36,7 +36,7 @@ public class AnimationController : MonoBehaviour
     {
       //Debug.Log(player.IsFail);
       //Debug.Log(armatureComponent.animation.GetState(jumpRunAnimation)._animationData.frameCount);
-      //Debug.Log(state);
+      Debug.Log(state);
     }
 
 
@@ -67,7 +67,7 @@ public class AnimationController : MonoBehaviour
 	}
        
 
-    public void Jump(int direction,float speed){
+    public void Jump(float velocityY){
         if(state != State.DEAD && state != State.FAIL){
             if (state != State.JUMP) {
                 armatureComponent.animation.Play(jumpRunAnimation, -1);
@@ -76,11 +76,16 @@ public class AnimationController : MonoBehaviour
                 state = State.JUMP;
             }
         }
+        if(state == State.SLIDE){
+            armatureComponent.animation.GotoAndPlayByTime(jumpRunAnimation,0.21f);
+            armatureComponent.animation.timeScale = 1f;
+            state = State.JUMP;
+        }
         
     }
 
-    public void Fall(){
-        if((state != State.FAIL && Time.time > time)||state == State.SLIDE){
+    public void Fall(float velocityY){
+        if((state != State.FAIL && Time.time > time)||(state == State.SLIDE && velocityY < 0)){
                armatureComponent.animation.FadeIn("fall", 0f,-1); 
                state = State.FAIL;
         }

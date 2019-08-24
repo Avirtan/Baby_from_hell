@@ -10741,12 +10741,12 @@ PrefabInstance:
     - target: {fileID: 6091690774304728493, guid: 3f042b7945a3e1d4fb2ceb69c595e01f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.9
+      value: -4.9
       objectReference: {fileID: 0}
     - target: {fileID: 6091690774304728493, guid: 3f042b7945a3e1d4fb2ceb69c595e01f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.4
+      value: 3.3
       objectReference: {fileID: 0}
     - target: {fileID: 6091690774304728493, guid: 3f042b7945a3e1d4fb2ceb69c595e01f,
         type: 3}
@@ -10796,12 +10796,17 @@ PrefabInstance:
     - target: {fileID: 6091690774304728494, guid: 3f042b7945a3e1d4fb2ceb69c595e01f,
         type: 3}
       propertyPath: animationName
-      value: idle
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6091690774304728494, guid: 3f042b7945a3e1d4fb2ceb69c595e01f,
         type: 3}
       propertyPath: _zSpace
       value: 0.038
+      objectReference: {fileID: 0}
+    - target: {fileID: 6091690774304728494, guid: 3f042b7945a3e1d4fb2ceb69c595e01f,
+        type: 3}
+      propertyPath: _flipX
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6091690774304728498, guid: 3f042b7945a3e1d4fb2ceb69c595e01f,
         type: 3}
