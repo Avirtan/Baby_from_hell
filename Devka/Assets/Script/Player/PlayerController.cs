@@ -65,20 +65,19 @@ public class PlayerController : MonoBehaviour
 
         if(!OnGround() &&  player.velocity.y < 0 && OnWall()!=0 && OnWall() == Diration() && time != -1){
             speed = new Vector3(moveX * 7, -2f, 0f);
-            if(OnWall() == 1 && Input.GetKey(KeyCode.A) && time==0){
-                time = Time.time + 0.06;
-            }
-            if(OnWall() == -1 && Input.GetKey(KeyCode.D) && time==0){
+            if((OnWall() == -1 && Input.GetKey(KeyCode.D)) || (OnWall() == 1 && Input.GetKey(KeyCode.A)) && time==0){
                 time = Time.time + 0.06;
             }
             if(time!=0 && time != -1){
                 if(Input.GetAxis ("Horizontal") > 0 && Input.GetButton("Jump")){
                     //player.AddForce(new Vector2(-moveX * 80 * airAcceleration * 7, 50 * airAcceleration * 7));
+                    player.velocity = Vector2.zero;
                     player.AddForce(new Vector2(-600,800));
                     speed = new Vector3(moveX * 7, player.velocity.y, 0f);
                 }
                 if(Input.GetAxis ("Horizontal") < 0 && Input.GetButton("Jump")){
                     //player.AddForce(new Vector2(moveX * 80 * airAcceleration * 7, 50 * airAcceleration * 7));
+                    player.velocity = Vector2.zero;
                     player.AddForce(new Vector2(600,800));
                     speed = new Vector3(moveX * 7, player.velocity.y, 0f);
                 }
@@ -87,28 +86,6 @@ public class PlayerController : MonoBehaviour
                 time = -1;
             }
         }
-
-        /* if(!OnGround() &&  player.velocity.y < 0 && OnWall()!=0 && time != -1){
-            speed = new Vector3 (moveX * 7, -2f, 0f);
-            if(time != 0 && Time.time > time){
-               // Debug.Log("test");
-            }
-            if(Input.GetAxis ("Horizontal")!=0 && Input.GetButtonDown("Jump"))
-            {
-               // if(time == 0)time = Time.time + 2;
-                if (OnWall()==-1  && Input.GetAxis ("Horizontal") > 0 ) {
-                    player.velocity = Vector2.zero;
-                    player.AddForce(new Vector2(moveX * 80 * airAcceleration * 7, 50 * airAcceleration * 7));
-                    //time = -1;
-                }
-                else if (OnWall()==1  && Input.GetAxis ("Horizontal")  < 0)
-                {
-                    player.velocity = Vector2.zero;
-                    player.AddForce(new Vector2(moveX * 80 * airAcceleration * 7, 50 * airAcceleration * 7));
-                    //time = -1;
-                }
-            }
-        }*/
         if(OnWall() == 0 || OnGround()) time =0;
     }
 
