@@ -95,7 +95,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6191917090524244778
 Transform:
   m_ObjectHideFlags: 0
@@ -614,11 +614,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f825bb5ce93d6ab429dfa508444119b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unityData: {fileID: 11400000, guid: 6752b157657aa484b9c03425da473a43, type: 2}
+  unityData: {fileID: 11400000, guid: 370fade334739534bab5a7b53e167545, type: 2}
   armatureName: Armature
   isUGUI: 0
   debugDraw: 0
-  animationName: slide
+  animationName: running
   _playTimes: 0
   _timeScale: 1
   _sortingMode: 0
@@ -649,7 +649,6 @@ MonoBehaviour:
   - "\u043A\u043E\u0444\u0442\u0430"
   - "\u043A\u043E\u0441\u0430\u041F"
   - "\u0433\u043E\u043B\u043E\u0432\u0430"
-  - "\u0440\u0443\u043A\u0430\u041F"
   dirty: 0
 --- !u!50 &6091690774304728498
 Rigidbody2D:
@@ -747,7 +746,7 @@ MonoBehaviour:
   runAnimation: running
   jumpRunAnimation: jump2
   jumpStayAnimation: jump1
-  jumpShiftAnimation: jump3
+  slideAnimation: slide
   glideAnimation: Glide
   failAnimation: fall
   dieAnimation: Die
@@ -1127,7 +1126,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4809596359197947219
 Transform:
   m_ObjectHideFlags: 0
