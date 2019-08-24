@@ -80,8 +80,6 @@ public class AnimationController : MonoBehaviour
     }
 
     public void Fall(){
-       // if((state == State.JUMP || state == State.SLIDE) && state != State.FAIL){
-        Debug.Log("gets");
         if(state != State.FAIL && Time.time > time){
                armatureComponent.animation.FadeIn("fall", 0f,-1); 
                state = State.FAIL;
@@ -104,10 +102,11 @@ public class AnimationController : MonoBehaviour
     public void Slide(int direction,int wall){
         if(state != State.SLIDE && state != State.DEAD){
             if((armatureComponent.armature.flipX && wall==-1)||(!armatureComponent.armature.flipX && wall==1)){
-            armatureComponent.animation.FadeIn(slideAnimation, 0.1f, -1);
-            armatureComponent.animation.timeScale = 1f;
-            state = State.SLIDE;
-            }
+                armatureComponent.animation.Play(slideAnimation,  -1);
+                armatureComponent.animation.timeScale = 1f;
+                state = State.SLIDE;
+            }else 
+                armatureComponent.animation.FadeIn("fall", 0f,-1);
         }
     }
 

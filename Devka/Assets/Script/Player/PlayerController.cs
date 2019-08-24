@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
     private bool isDeath = false;
     private string TagGround = "GROUND";
     private bool isJump = false;
+    private double time = 0;
+
 
     void Start()
     {
@@ -34,16 +36,20 @@ public class PlayerController : MonoBehaviour
             HandlerJump();
         }
         ControlAnimation();
-        //Debug.Log(player.velocity.y);
+        Debug.Log( time);
     }
 
 
     // управление движением
     void HandlerMove(){
-        moveX = 0;
+        if(Time.time < time) {
+            player.velocity = speed;
+            sprite.FlipX(diraction);
+            return;
+        }
         if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
             moveX = Input.GetAxis ("Horizontal");
-        if(Input.GetButton("Shift") && moveX!=0)
+        if(Input.GetButton("Shift") && moveX!=0 && OnGround())
         {
             speed = new Vector3 (moveX * 12, player.velocity.y, 0f);
         }else speed = new Vector3 (moveX * 7, player.velocity.y, 0f);
@@ -55,7 +61,6 @@ public class PlayerController : MonoBehaviour
     //управление прыжком
     void HandlerJump(){
         if(OnGround() && Input.GetButton("Jump")){
-            
             if(speed.x < -3 || speed.x > 3){
                 if(diraction == 1)player.AddForce (new Vector2 (70, 160f));
                 else player.AddForce(new Vector2 (-70, 160f));
@@ -66,15 +71,15 @@ public class PlayerController : MonoBehaviour
 
         }
         if(!OnGround() &&  player.velocity.y < 0 && OnWall()!=0){
-            speed = new Vector3 (moveX * 12, -1f, 0f);
-            if(Input.GetButton("Jump"))
+            if(time == 0)time = Time.time + 1;
+            speed = new Vector3 (moveX * 12, 0f, 0f);
+            if(Input.GetButton("Jump") && Input.GetAxis ("Horizontal")!=0)
             {
-                if (OnWall()==-1 && moveX > 0) {
+                if (OnWall()==-1  && Input.GetAxis ("Horizontal") > 0) {
                     player.velocity = Vector2.zero;
                     player.AddForce(new Vector2(moveX * 80 * airAcceleration * 7, 50 * airAcceleration * 7));
-                    //isJump = true;
                 }
-                else if (OnWall()==1 && moveX < 0)
+                else if (OnWall()==1  && Input.GetAxis ("Horizontal") < 0)
                 {
                     player.velocity = Vector2.zero;
                     player.AddForce(new Vector2(moveX * 80 * airAcceleration * 7, 50 * airAcceleration * 7));
@@ -82,7 +87,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-       // if((player.velocity.y > 1 || player.velocity.y <-2)&& Input.GetButton("Jump")){
+        if(OnWall() == 0) time =0;
         if(!OnGround()){
             isJump = true;
         }
@@ -96,7 +101,7 @@ public class PlayerController : MonoBehaviour
     void ControlAnimation(){
         if(isDeath){
             return;
-        }else if(OnWall()==diraction && !OnGround()){
+        }else if(OnWall()==diraction && !OnGround() && player.velocity.y<0){
             sprite.Slide(diraction,OnWall());
         }else if(isJump){
             if(player.velocity.y > 0) sprite.Jump(diraction,speed.x);
