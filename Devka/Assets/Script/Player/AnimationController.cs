@@ -70,12 +70,8 @@ public class AnimationController : MonoBehaviour
     public void Jump(int direction,float speed){
         if(state != State.DEAD && state != State.FAIL){
             if (state != State.JUMP) {
-                if(speed != 0){ 
-                    armatureComponent.animation.Play(jumpRunAnimation, -1);
-                    time = Time.time+1.25;
-                }
-                else
-                    armatureComponent.animation.Play(jumpStayAnimation, -1);
+                armatureComponent.animation.Play(jumpRunAnimation, -1);
+                time = Time.time+1.25;
                 armatureComponent.animation.timeScale = 1f;
                 state = State.JUMP;
             }
@@ -85,6 +81,7 @@ public class AnimationController : MonoBehaviour
 
     public void Fall(){
        // if((state == State.JUMP || state == State.SLIDE) && state != State.FAIL){
+        Debug.Log("gets");
         if(state != State.FAIL && Time.time > time){
                armatureComponent.animation.FadeIn("fall", 0f,-1); 
                state = State.FAIL;

@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
             HandlerJump();
         }
         ControlAnimation();
-        Debug.Log(player.velocity.y);
+        //Debug.Log(player.velocity.y);
     }
 
 
@@ -82,7 +82,8 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        if((player.velocity.y > 1 || player.velocity.y <-2)&& Input.GetButton("Jump")){
+       // if((player.velocity.y > 1 || player.velocity.y <-2)&& Input.GetButton("Jump")){
+        if(!OnGround()){
             isJump = true;
         }
         if(player.velocity.y == 0 && OnGround()){ 
