@@ -42,11 +42,12 @@ public class PlayerController : MonoBehaviour
 
     // управление движением
     void HandlerMove(){
-        if(Time.time < time) {
+        /*if(Time.time < time) {
             player.velocity = speed;
             sprite.FlipX(diraction);
             return;
-        }
+        } */
+        moveX =0;
         if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
             moveX = Input.GetAxis ("Horizontal");
         if(Input.GetButton("Shift") && moveX!=0 && OnGround())
@@ -71,15 +72,15 @@ public class PlayerController : MonoBehaviour
 
         }
         if(!OnGround() &&  player.velocity.y < 0 && OnWall()!=0){
-            if(time == 0)time = Time.time + 1;
-            speed = new Vector3 (moveX * 12, 0f, 0f);
+            //if(time == 0)time = Time.time + 1;
+           // speed = new Vector3 (moveX * 12, 0f, 0f);
             if(Input.GetButton("Jump") && Input.GetAxis ("Horizontal")!=0)
             {
-                if (OnWall()==-1  && Input.GetAxis ("Horizontal") > 0) {
+                if (OnWall()==-1  && moveX > 0) {
                     player.velocity = Vector2.zero;
                     player.AddForce(new Vector2(moveX * 80 * airAcceleration * 7, 50 * airAcceleration * 7));
                 }
-                else if (OnWall()==1  && Input.GetAxis ("Horizontal") < 0)
+                else if (OnWall()==1  && moveX  < 0)
                 {
                     player.velocity = Vector2.zero;
                     player.AddForce(new Vector2(moveX * 80 * airAcceleration * 7, 50 * airAcceleration * 7));
@@ -87,7 +88,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        if(OnWall() == 0) time =0;
+       // if(OnWall() == 0) time =0;
         if(!OnGround()){
             isJump = true;
         }
