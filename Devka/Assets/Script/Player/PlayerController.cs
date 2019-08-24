@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     private string TagGround = "GROUND";
     private bool isJump = false;
     private double time = 0;
+    public bool isLanding = false; 
 
     void Start()
     {
@@ -34,9 +35,10 @@ public class PlayerController : MonoBehaviour
             HandlerMove();
             HandlerJump();
             player.velocity = speed;
+            speed.y = 0;
         }
         ControlAnimation();
-        //Debug.Log(player.velocity.y);
+        Debug.Log(player.velocity);
     }
 
     // управление движением
@@ -46,6 +48,7 @@ public class PlayerController : MonoBehaviour
         {
             speed = new Vector3 (moveX * 12, player.velocity.y, 0f);
         }else speed = new Vector3 (moveX * 7, player.velocity.y, 0f);
+        if (isLanding) speed.x = 0;
         moveX = Input.GetAxis ("Horizontal");
         sprite.FlipX(Diration());
     }
@@ -62,7 +65,7 @@ public class PlayerController : MonoBehaviour
             }
 
         }
-
+        //if(OnWall()!=0 && speed.y > 0) speed.y = 0;
         if(!OnGround() &&  player.velocity.y < 0 && OnWall()!=0 && OnWall() == Diration() && time != -1){
             speed = new Vector3(moveX * 7, -2f, 0f);
             if((OnWall() == -1 && Input.GetKey(KeyCode.D)) || (OnWall() == 1 && Input.GetKey(KeyCode.A)) && time==0){
@@ -71,15 +74,13 @@ public class PlayerController : MonoBehaviour
             if(time!=0 && time != -1){
                 if(Input.GetAxis ("Horizontal") > 0 && Input.GetButton("Jump")){
                     //player.AddForce(new Vector2(-moveX * 80 * airAcceleration * 7, 50 * airAcceleration * 7));
-                    player.velocity = Vector2.zero;
-                    player.AddForce(new Vector2(0,800));
+                    player.AddForce(new Vector2(1000, 0));
                     //speed = new Vector3(moveX * 7, player.velocity.y, 0f);
                 }
                 if(Input.GetAxis ("Horizontal") < 0 && Input.GetButton("Jump")){
                     //player.AddForce(new Vector2(moveX * 80 * airAcceleration * 7, 50 * airAcceleration * 7));
-                    player.velocity = Vector2.zero;
-                    player.AddForce(new Vector2(0,800));
-                    //speed = new Vector3(moveX * 7, player.velocity.y, 0f);
+                    player.AddForce(new Vector2(-500, 500));
+                    speed = new Vector3(moveX * 7, player.velocity.y, 0f);
                 }
             }
             if(Time.time > time && time!=0){
@@ -95,6 +96,7 @@ public class PlayerController : MonoBehaviour
             return;
         }else if(IsJump() && player.velocity.y<0 && OnWall()!=0 && time!=-1 && OnWall()==Diration()){
             //if(OnWall()==Diration())
+           // Debug.Log("slide");
             sprite.Slide();
             //else sprite.Fall(player.velocity.y);
         }else if(IsJump()){
@@ -106,7 +108,7 @@ public class PlayerController : MonoBehaviour
             }else{
                 sprite.Idle();
             }
-        }
+        }else Debug.Log("else");
     }
 
     bool isRuning(){
