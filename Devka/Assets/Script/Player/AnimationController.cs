@@ -109,7 +109,7 @@ public class AnimationController : MonoBehaviour
 
     public void FlipX(int flip){
         if(flip == 1)armatureComponent.armature.flipX = false;
-        else armatureComponent.armature.flipX = true;
+        else if(flip == -1) armatureComponent.armature.flipX = true;
     }
 
     public int GetFlipX(){
