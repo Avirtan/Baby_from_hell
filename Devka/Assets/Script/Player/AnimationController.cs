@@ -84,7 +84,8 @@ public class AnimationController : MonoBehaviour
     }
 
     public void Fall(){
-        if((state == State.JUMP || state == State.SLIDE) && state != State.FAIL){
+       // if((state == State.JUMP || state == State.SLIDE) && state != State.FAIL){
+        if(state != State.FAIL && Time.time > time){
                armatureComponent.animation.FadeIn("fall", 0f,-1); 
                state = State.FAIL;
         }

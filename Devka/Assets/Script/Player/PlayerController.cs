@@ -99,7 +99,7 @@ public class PlayerController : MonoBehaviour
             sprite.Slide(diraction,OnWall());
         }else if(isJump){
             if(player.velocity.y > 0) sprite.Jump(diraction,speed.x);
-            if(player.velocity.y < -8) {sprite.Fall();} 
+            if(player.velocity.y < 0) {sprite.Fall();} 
         }else if(OnGround()){
             if(isRuning()){
                 sprite.Run(Input.GetButton("Shift"));
