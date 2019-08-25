@@ -68,7 +68,7 @@ public class Controller : MonoBehaviour
 
     //для отслеживания прыжков
     private void HandleJump(){
-        if(isGround()  && Jump){
+        if(isGround() && Jump && !isLanding){
             rgb3d.AddForce(new Vector3(MoveX*200,jumpForce,0));
         }
         if(wallDirection()==MoveX && MoveX!=0 && !isGround() && rgb3d.velocity.y > 0){
@@ -78,8 +78,7 @@ public class Controller : MonoBehaviour
 
     //отслеживание ввода с клавиатуры
     private void GetInput(){
-        if(!isLanding)
-            MoveX = Input.GetAxis ("Horizontal");
+        MoveX = Input.GetAxis ("Horizontal");
         direction = MoveX != 0 ?(MoveX>0?direction = 1:direction=-1):direction;
         sprite.FlipX(direction);
         Jump =  Input.GetButton("Jump");
@@ -105,9 +104,9 @@ public class Controller : MonoBehaviour
 
 
     // Расстояние до земли и определение нахождения на земле 
-    private float lenghtToGround = 1.5f; 
+    private float lenghtToGround = 1.4f; 
     private bool isGround(){
-       //Debug.DrawLine(rgb3d.position,new Vector3(rgb3d.position.x,rgb3d.position.y-lenghtToGround,rgb3d.position.z),Color.red,2f);
+       Debug.DrawLine(rgb3d.position,new Vector3(rgb3d.position.x,rgb3d.position.y-lenghtToGround,rgb3d.position.z),Color.red,2f);
        return Physics.Raycast(rgb3d.position, Vector3.down, lenghtToGround);
     }
 
