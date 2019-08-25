@@ -100,7 +100,7 @@ public class AnimationController : MonoBehaviour
                 player.IsLanding = true;
             }
         }
-        if(armatureComponent.animation.GetState(jumpRunAnimation)!= null && (armatureComponent.animation.GetState(jumpRunAnimation).currentTime >= 1.60 || armatureComponent.animation.GetState(jumpRunAnimation).currentTime < 1.25)) 
+        if(armatureComponent.animation.GetState(jumpRunAnimation)!= null && (armatureComponent.animation.GetState(jumpRunAnimation).currentTime >= 1.55 || armatureComponent.animation.GetState(jumpRunAnimation).currentTime < 1.25)) 
         {
             state = State.JUMP;
             player.IsLanding = false;
