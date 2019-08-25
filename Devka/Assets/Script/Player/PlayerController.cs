@@ -117,7 +117,7 @@ public class PlayerController : MonoBehaviour
         }else if(IsJump() && player.velocity.y<0 && OnWall()!=0 && time!=-1 && OnWall()==Diration()){
             sprite.Slide();
         }else if(IsJump()){
-            if(player.velocity.y > 0) sprite.Jump(player.velocity.y);
+            if(player.velocity.y > 0) sprite.Jump();
             if(player.velocity.y < 0) {sprite.Fall(player.velocity.y);} 
         }else if(OnGround()){
             if(isRuning()){

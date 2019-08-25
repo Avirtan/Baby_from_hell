@@ -25,10 +25,10 @@ public class AnimationController : MonoBehaviour
     private UnityArmatureComponent armatureComponent;
 	private DragonBones.AnimationState animState;
     private DragonBones.AnimationData data;
-    private PlayerController player;
+    private Controller player;
 	void Start () {
 		armatureComponent = GetComponentInChildren<UnityArmatureComponent>();
-        player = GetComponent<PlayerController>();
+        player = GetComponent<Controller>();
 	}
 
     // Update is called once per frame
@@ -67,7 +67,7 @@ public class AnimationController : MonoBehaviour
 	}
        
 
-    public void Jump(float velocityY){
+    public void Jump(){
         if(state != State.DEAD && state != State.FAIL){
             if (state != State.JUMP) {
                 armatureComponent.animation.Play(jumpRunAnimation, -1);
@@ -97,13 +97,13 @@ public class AnimationController : MonoBehaviour
             if((armatureComponent.animation.lastAnimationName == "jump2"  || armatureComponent.animation.lastAnimationName == "fall") && state != State.LANDING){
                 state = State.LANDING;
                 armatureComponent.animation.GotoAndPlayByTime(jumpRunAnimation,1.25f);
-                player.isLanding = true;
+                //player.isLanding = true;
             }
         }
         if(armatureComponent.animation.GetState(jumpRunAnimation)!= null && (armatureComponent.animation.GetState(jumpRunAnimation).currentTime >= 1.60 || armatureComponent.animation.GetState(jumpRunAnimation).currentTime < 1.25)) 
         {
             state = State.JUMP;
-            player.isLanding = false;
+            //player.isLanding = false;
         }
     }
 
