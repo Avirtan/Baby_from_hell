@@ -17,8 +17,22 @@ public class Controller : MonoBehaviour
     private Rigidbody rgb3d;
     //Скорость по x,y,z
     private Vector3 velocity = new Vector3(0,0,0);
-    //Направление персонажа ->(1),<-(-1),|(0)
+    //Направление движения персонажа ->(1),<-(-1),|(0)
     private int direction = 0;
+    //Запрет передвижения при анимации презимления 
+    private bool isLanding = false;
+    public bool IsLanding
+    {
+        get
+        {
+            return isLanding;
+        }
+ 
+        set
+        {
+            isLanding = value;
+        }
+    }
 
     //Класс с анимациями
     protected AnimationController sprite;
@@ -48,6 +62,8 @@ public class Controller : MonoBehaviour
     //метод для отслеживания движения
     private void HandlerMove(){
         velocity = new Vector3(MoveX*speed,rgb3d.velocity.y,0f);
+        if(isLanding)
+            velocity = Vector3.zero;
     }
 
     //для отслеживания прыжков
@@ -62,7 +78,8 @@ public class Controller : MonoBehaviour
 
     //отслеживание ввода с клавиатуры
     private void GetInput(){
-        MoveX = Input.GetAxis ("Horizontal");
+        if(!isLanding)
+            MoveX = Input.GetAxis ("Horizontal");
         direction = MoveX != 0 ?(MoveX>0?direction = 1:direction=-1):direction;
         sprite.FlipX(direction);
         Jump =  Input.GetButton("Jump");
