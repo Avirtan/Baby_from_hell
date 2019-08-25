@@ -27,7 +27,7 @@ public class AnimationController : MonoBehaviour
     private DragonBones.AnimationData data;
     private PlayerController player;
 	void Start () {
-		armatureComponent = GetComponent<UnityArmatureComponent>();
+		armatureComponent = GetComponentInChildren<UnityArmatureComponent>();
         player = GetComponent<PlayerController>();
 	}
 
@@ -36,7 +36,7 @@ public class AnimationController : MonoBehaviour
     {
       //Debug.Log(player.IsFail);
       //Debug.Log(armatureComponent.animation.GetState(jumpRunAnimation)._animationData.frameCount);
-       //Debug.Log(state);
+       //Debug.Log(armatureComponent);
     }
 
 
