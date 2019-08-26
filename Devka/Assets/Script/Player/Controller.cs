@@ -54,7 +54,7 @@ public class Controller : MonoBehaviour
         GetInput();
         HandlerMove();
         AnimationController();
-        Debug.Log(timerWall);
+        //Debug.Log(MoveX);
     }
 
     // Для физических действий
@@ -91,7 +91,7 @@ public class Controller : MonoBehaviour
         //Отскок от стены
         if(rgb3d.velocity.y < 0 && wallDirection() == direction && !isGround()){
             velocity.y =-2;
-            if(Input.GetButton("Jump")) rgb3d.AddForce(new Vector3(1250*direction,jumpForce+200,0));
+            if(Input.GetButton("Jump") && MoveX != wallDirection()) rgb3d.AddForce(new Vector3(1250*direction,jumpForce+200,0));
             if(Input.GetAxis("Horizontal") < 0 && wallDirection() == 1) {
                 //timerWall = Time.time + 1.5f;
                 velocity.x = speed*MoveX;
