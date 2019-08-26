@@ -19,7 +19,8 @@ public class Controller : MonoBehaviour
     private Vector3 velocity = new Vector3(0,0,0);
     //Направление движения персонажа ->(1),<-(-1),|(0)
     private int direction = 0;
-    //Запрет передвижения при анимации презимления 
+
+    //Запрет передвижения при анимации приземления 
     private bool isLanding = false;
     public bool IsLanding
     {
@@ -64,6 +65,9 @@ public class Controller : MonoBehaviour
         velocity = new Vector3(MoveX*speed,rgb3d.velocity.y,0f);
         if(isLanding)
             velocity = Vector3.zero;
+        if(Input.GetButton("Shift") && !isLanding){
+            velocity.x = MoveX*12;
+        }
     }
 
     //для отслеживания прыжков
@@ -74,6 +78,13 @@ public class Controller : MonoBehaviour
         if(wallDirection()==MoveX && MoveX!=0 && !isGround() && rgb3d.velocity.y > 0){
             velocity.y = 0;
         }
+        if(rgb3d.velocity.y < 0){
+            velocity.y -=0.2f;
+        }
+        if(rgb3d.velocity.y < 0 && wallDirection() == direction && !isGround()){
+            velocity.y =-2;
+            if(Jump) rgb3d.AddForce(new Vector3(-1250*direction,jumpForce+200,0));
+        }
     }
 
     //отслеживание ввода с клавиатуры
@@ -81,15 +92,15 @@ public class Controller : MonoBehaviour
         MoveX = Input.GetAxis ("Horizontal");
         direction = MoveX != 0 ?(MoveX>0?direction = 1:direction=-1):direction;
         sprite.FlipX(direction);
-        Jump =  Input.GetButton("Jump");
+        Jump =  Input.GetButtonDown("Jump");
     }
 
     //Для задания анимации
     private void AnimationController(){
         if(false){
             return;
-        }else if(false){
-            //sprite.Slide();
+        }else if(wallDirection()!=0 && wallDirection() == direction && rgb3d.velocity.y < 0 && !isGround()){
+             sprite.Slide();
         }else if(!isGround()){
             if(rgb3d.velocity.y > 0) sprite.Jump();
             if(rgb3d.velocity.y < 0) {sprite.Fall(rgb3d.velocity.y);} 
@@ -106,7 +117,7 @@ public class Controller : MonoBehaviour
     // Расстояние до земли и определение нахождения на земле 
     private float lenghtToGround = 1.4f; 
     private bool isGround(){
-       Debug.DrawLine(rgb3d.position,new Vector3(rgb3d.position.x,rgb3d.position.y-lenghtToGround,rgb3d.position.z),Color.red,2f);
+       //Debug.DrawLine(rgb3d.position,new Vector3(rgb3d.position.x,rgb3d.position.y-lenghtToGround,rgb3d.position.z),Color.red,2f);
        return Physics.Raycast(rgb3d.position, Vector3.down, lenghtToGround);
     }
 
