@@ -15,6 +15,8 @@ public class Controller : MonoBehaviour
     private bool Jump = false;
     //Физический объект
     private Rigidbody rgb3d;
+    //таймер для нажатия в сторону при нажатии в сторону на стене 
+    private float timerWall = 0;
     //Скорость по x,y,z
     private Vector3 velocity = new Vector3(0,0,0);
     //Направление движения персонажа ->(1),<-(-1),|(0)
@@ -52,6 +54,7 @@ public class Controller : MonoBehaviour
         GetInput();
         HandlerMove();
         AnimationController();
+        Debug.Log(timerWall);
     }
 
     // Для физических действий
@@ -68,6 +71,7 @@ public class Controller : MonoBehaviour
         if(Input.GetButton("Shift") && !isLanding){
             velocity.x = MoveX*12;
         }
+        //if(Time.time < timerWall && !isGround()) velocity.x = 0;
     }
 
     //для отслеживания прыжков
@@ -83,8 +87,17 @@ public class Controller : MonoBehaviour
         }
         if(rgb3d.velocity.y < 0 && wallDirection() == direction && !isGround()){
             velocity.y =-2;
-            if(Jump) rgb3d.AddForce(new Vector3(-1250*direction,jumpForce+200,0));
+            if(Input.GetButton("Jump")) rgb3d.AddForce(new Vector3(1250*direction,jumpForce+200,0));
+            if(Input.GetAxis ("Horizontal") < 0 && wallDirection() == 1) {
+                timerWall = Time.time + 1.5f;
+                velocity.x = speed*MoveX;
+            }
+            if(Input.GetAxis ("Horizontal") > 0 && wallDirection() == -1) {
+                timerWall = Time.time + 1.5f;
+                velocity.x = speed*MoveX;
+            }
         }
+        if(!isWall() || isGround()) timerWall = 0;
     }
 
     //отслеживание ввода с клавиатуры
