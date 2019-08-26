@@ -82,22 +82,27 @@ public class Controller : MonoBehaviour
         if(wallDirection()==MoveX && MoveX!=0 && !isGround() && rgb3d.velocity.y > 0){
             velocity.y = 0;
         }
+
+        //??????????
         if(rgb3d.velocity.y < 0){
             velocity.y -=0.2f;
         }
+
+        //Отскок от стены
         if(rgb3d.velocity.y < 0 && wallDirection() == direction && !isGround()){
             velocity.y =-2;
             if(Input.GetButton("Jump")) rgb3d.AddForce(new Vector3(1250*direction,jumpForce+200,0));
-            if(Input.GetAxis ("Horizontal") < 0 && wallDirection() == 1) {
-                timerWall = Time.time + 1.5f;
+            if(Input.GetAxis("Horizontal") < 0 && wallDirection() == 1) {
+                //timerWall = Time.time + 1.5f;
                 velocity.x = speed*MoveX;
             }
-            if(Input.GetAxis ("Horizontal") > 0 && wallDirection() == -1) {
-                timerWall = Time.time + 1.5f;
+            if(Input.GetAxis("Horizontal") > 0 && wallDirection() == -1) {
+               // timerWall = Time.time + 1.5f;
                 velocity.x = speed*MoveX;
             }
         }
-        if(!isWall() || isGround()) timerWall = 0;
+       // if(!isWall() || isGround()) timerWall = 0;
+        //
     }
 
     //отслеживание ввода с клавиатуры
