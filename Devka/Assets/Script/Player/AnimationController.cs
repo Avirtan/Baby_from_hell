@@ -96,15 +96,15 @@ public class AnimationController : MonoBehaviour
         if(state == State.FAIL || state == State.JUMP){
             if((armatureComponent.animation.lastAnimationName == "jump2"  || armatureComponent.animation.lastAnimationName == "fall") && state != State.LANDING){
                 state = State.LANDING;
-                armatureComponent.animation.timeScale = 1.5f;
+                armatureComponent.animation.timeScale = 1f;
                 armatureComponent.animation.GotoAndPlayByTime(jumpRunAnimation,1.25f);
-                player.IsLanding = true;
+                //player.IsLanding = true;
             }
         }
         if(armatureComponent.animation.GetState(jumpRunAnimation)!= null && (armatureComponent.animation.GetState(jumpRunAnimation).currentTime >= 1.55 || armatureComponent.animation.GetState(jumpRunAnimation).currentTime < 1.25)) 
         {
             state = State.JUMP;
-            player.IsLanding = false;
+            //player.IsLanding = false;
         }
     }
 

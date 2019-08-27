@@ -21,7 +21,6 @@ public class Controller : MonoBehaviour
     private Vector3 velocity = new Vector3(0,0,0);
     //Направление движения персонажа ->(1),<-(-1),|(0)
     private int direction = 0;
-
     //Запрет передвижения при анимации приземления 
     private bool isLanding = false;
     public bool IsLanding
@@ -54,7 +53,8 @@ public class Controller : MonoBehaviour
         GetInput();
         HandlerMove();
         AnimationController();
-        //Debug.Log(MoveX);
+        Debug.Log(MoveX);
+        Debug.Log(timerWall);
     }
 
     // Для физических действий
@@ -71,6 +71,8 @@ public class Controller : MonoBehaviour
         if(Input.GetButton("Shift") && !isLanding){
             velocity.x = MoveX*12;
         }
+        if(timerWall > Time.time)
+            velocity.x = 0;
         //if(Time.time < timerWall && !isGround()) velocity.x = 0;
     }
 
@@ -87,27 +89,39 @@ public class Controller : MonoBehaviour
         if(rgb3d.velocity.y < 0){
             velocity.y -=0.2f;
         }
-
+        
         //Отскок от стены
-        if(rgb3d.velocity.y < 0 && wallDirection() == direction && !isGround()){
+        if(IsSlide()){
             velocity.y =-2;
-            if(Input.GetButton("Jump") && MoveX != wallDirection()) 
-                rgb3d.AddForce(new Vector3(1250*direction,jumpForce+200,0));
+               // rgb3d.AddForce(new Vector3(1250*direction,jumpForce+200,0));
             if((Input.GetAxis("Horizontal") < 0 && wallDirection() == 1) || (Input.GetAxis("Horizontal") > 0 && wallDirection() == -1)) {
-                //timerWall = Time.time + 1.5f;
                 velocity.x = speed*MoveX;
             }
+            if(Mathf.FloorToInt(MoveX) != wallDirection() && Input.GetButton("Jump")){
+                rgb3d.AddForce(new Vector3(1250*direction,jumpForce+200,0));
+                if(timerWall!=0)
+                    timerWall = -1;
+            }
+           // if(Input.GetButton("Jump") && MoveX != 0) timerWall = 0;
         }
-       // if(!isWall() || isGround()) timerWall = 0;
-        //
+        if(!isWall() || isGround()) timerWall = 0;
     }
 
     //отслеживание ввода с клавиатуры
     private void GetInput(){
         MoveX = Input.GetAxis ("Horizontal");
-        direction = MoveX != 0 ?(MoveX>0?direction = 1:direction=-1):direction;
+        if(MoveX!=0 && Mathf.FloorToInt(MoveX) != wallDirection() && IsSlide()){
+                timerWall = Time.time + 1.5f;
+           /*  if(MoveX < 0 && wallDirection() > 0 && timerWall == 0){
+            }
+            if(MoveX > 0 && wallDirection() < 0 && timerWall == 0){
+                timerWall = Time.time + 1.5f;
+            }*/
+        }
+        if(Time.time > timerWall)
+            direction = MoveX != 0 ?(MoveX>0?direction = 1:direction=-1):direction;
         sprite.FlipX(direction);
-        Jump =  Input.GetButtonDown("Jump");
+        Jump = Input.GetButtonDown("Jump");
     }
 
     //Для задания анимации
@@ -163,5 +177,10 @@ public class Controller : MonoBehaviour
     private bool isTouchingGroundOrWall(){
         if(isWall() || isGround()) return true;
         else return false;
+    }
+
+    //Проверка скольжения 
+    private bool IsSlide(){
+        return rgb3d.velocity.y < 0 && wallDirection() == direction && !isGround();
     }
 }
