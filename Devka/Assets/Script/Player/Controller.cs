@@ -71,7 +71,7 @@ public class Controller : MonoBehaviour
         HandlerMove();
         AnimationController();
         
-        //Debug.Log(MoveX);
+        Debug.Log(IsRise);
         fGroundedRemember -= Time.deltaTime;
         if (isGround() && !isJump())
         {
