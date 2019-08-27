@@ -36,7 +36,7 @@ public class AnimationController : MonoBehaviour
     {
       //Debug.Log(player.IsFail);
       //Debug.Log(armatureComponent.animation.GetState(jumpRunAnimation)._animationData.frameCount);
-       //Debug.Log(armatureComponent);
+       Debug.Log(state);
     }
 
 
@@ -68,7 +68,7 @@ public class AnimationController : MonoBehaviour
        
 
     public void Jump(){
-        if(state != State.DEAD && state != State.FAIL){
+        if(state != State.DEAD){// && state != State.FAIL){
             if (state != State.JUMP) {
                 armatureComponent.animation.Play(jumpRunAnimation, -1);
                 time = Time.time+1.25;
