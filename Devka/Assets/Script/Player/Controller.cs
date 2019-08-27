@@ -58,7 +58,7 @@ public class Controller : MonoBehaviour
         HandlerMove();
         AnimationController();
         
-        //Debug.Log(fGroundedRemember);
+        Debug.Log(MoveX);
         fGroundedRemember -= Time.deltaTime;
         if (isGround() && !isJump())
         {
@@ -105,7 +105,7 @@ public class Controller : MonoBehaviour
             if((Input.GetAxis("Horizontal") < 0 && wallDirection() == 1) || (Input.GetAxis("Horizontal") > 0 && wallDirection() == -1)) {
                 velocity.x = speed*MoveX;
             }
-            if(Mathf.FloorToInt(MoveX) != wallDirection() && Input.GetButton("Jump")){
+            if(Mathf.FloorToInt(MoveX) != wallDirection() && Input.GetAxis("Horizontal")!=0 && Input.GetButton("Jump")){
                 rgb3d.AddForce(new Vector3(1250*direction,jumpForce+200,0));
                 if(timerWall!=0)
                     timerWall = -1;
@@ -133,7 +133,7 @@ public class Controller : MonoBehaviour
         }else if(wallDirection()!=0 && wallDirection() == direction && rgb3d.velocity.y < 0 && !isGround()){
              sprite.Slide();
         }else if(!isGround()){
-            if(rgb3d.velocity.y > 0) {sprite.Jump(); Debug.Log("jump");}
+            if(rgb3d.velocity.y > 0) {sprite.Jump();}
             if(rgb3d.velocity.y < 0) {sprite.Fall(rgb3d.velocity.y);} 
         }else if(isGround()){
             if(velocity.x != 0){
