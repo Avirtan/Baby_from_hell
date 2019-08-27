@@ -39,6 +39,19 @@ public class Controller : MonoBehaviour
             isLanding = value;
         }
     }
+    private bool isRise = false;
+    public bool IsRise
+    {
+        get
+        {
+            return isRise;
+        }
+ 
+        set
+        {
+            isRise = value;
+        }
+    }
 
     //Класс с анимациями
     protected AnimationController sprite;
@@ -58,17 +71,19 @@ public class Controller : MonoBehaviour
         HandlerMove();
         AnimationController();
         
-        Debug.Log(MoveX);
+        //Debug.Log(MoveX);
         fGroundedRemember -= Time.deltaTime;
         if (isGround() && !isJump())
         {
             fGroundedRemember = fGroundedRememberTime;
         }
+        //Debug.Log(CheckBlocksForRiseRight());
     }
 
     // Для физических действий
     void FixedUpdate(){
         HandleJump();
+        HandlerRise();
         rgb3d.velocity = velocity;
     }
 
@@ -112,6 +127,21 @@ public class Controller : MonoBehaviour
             }
         }
         if(!isWall() || isGround()) timerWall = 0;
+
+        //if(rgb3d.velocity.y>0) rgb3d.AddForce(Vector3.up * 2);
+        //if(rgb3d.velocity.y<-1) rgb3d.AddForce(Vector3.down * -9);
+    }
+
+    private void HandlerRise(){
+        //Debug.Log(CheckBlocksForRiseRight());
+        if(wallDirection()==1 && CheckBlocksForRiseRight()){
+            if(isRise){
+                rgb3d.velocity = Vector3.zero;
+                velocity = Vector3.zero;
+            }
+            if(direction == 1 && !isRise)
+                transform.position = new Vector3(transform.position.x+1,transform.position.y+1,0);
+        }
     }
 
     //отслеживание ввода с клавиатуры
@@ -130,6 +160,8 @@ public class Controller : MonoBehaviour
     private void AnimationController(){
         if(false){
             return;
+        }else if(wallDirection()==1 && CheckBlocksForRiseRight()){
+            sprite.Rise();
         }else if(wallDirection()!=0 && wallDirection() == direction && rgb3d.velocity.y < 0 && !isGround()){
              sprite.Slide();
         }else if(!isGround()){
@@ -188,5 +220,22 @@ public class Controller : MonoBehaviour
     //проверка прыжка
     private bool isJump(){
         return !(isGround() && (Mathf.FloorToInt(rgb3d.velocity.y) < 0 || Mathf.FloorToInt(rgb3d.velocity.y) > -1));
+    }
+
+    //Заползание 
+    private bool CheckBlocksForRiseRight(){
+        //Debug.DrawLine(new Vector3(rgb3d.position.x,rgb3d.position.y+0.7f,rgb3d.position.z),new Vector3(rgb3d.position.x+1.5f,rgb3d.position.y+0.7f,rgb3d.position.z),Color.red,1f);
+        //Debug.DrawLine(new Vector3(rgb3d.position.x,rgb3d.position.y+2,rgb3d.position.z),new Vector3(rgb3d.position.x+2,rgb3d.position.y+2,rgb3d.position.z),Color.red,1f);
+        bool up = Physics.Linecast(new Vector3(rgb3d.position.x,rgb3d.position.y+2,rgb3d.position.z),new Vector3(rgb3d.position.x+2,rgb3d.position.y+2,rgb3d.position.z));
+        bool down =  Physics.Linecast(new Vector3(rgb3d.position.x,rgb3d.position.y+0.7f,rgb3d.position.z),new Vector3(rgb3d.position.x+1.5f,rgb3d.position.y+0.7f,rgb3d.position.z));
+       //Debug.Log("up"+up);
+       //Debug.Log("down"+down);
+        if(!up && !down) return true;
+        else return false;
+    }
+
+
+    void OnCollisionEnter(Collision collision) {
+       // Debug.Log(collision.gameObject.name);
     }
 }

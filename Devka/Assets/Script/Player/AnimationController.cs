@@ -9,7 +9,7 @@ public class AnimationController : MonoBehaviour
     public string idleAnimation = "idle";
 
 	public string runAnimation = "running";
-
+    public string riseAnimation = "rise";
 	public string jumpRunAnimation = "jump2";
     public string jumpStayAnimation = "jump1";
     public string slideAnimation = "slide";
@@ -18,7 +18,7 @@ public class AnimationController : MonoBehaviour
 	public string dieAnimation = "Die";
 	public string attackAnimation = "Attack";
 
-    enum State {IDLE, RUN,SHOOT,JUMP,DEAD,FAIL,LANDING,SLIDE};
+    enum State {IDLE, RUN,SHOOT,JUMP,DEAD,FAIL,LANDING,SLIDE,RISE};
     private State state = State.IDLE;
 
     private double time;
@@ -36,7 +36,7 @@ public class AnimationController : MonoBehaviour
     {
       //Debug.Log(player.IsFail);
       //Debug.Log(armatureComponent.animation.GetState(jumpRunAnimation)._animationData.frameCount);
-       //Debug.Log(state);
+       Debug.Log(state);
     }
 
 
@@ -114,6 +114,20 @@ public class AnimationController : MonoBehaviour
                 armatureComponent.animation.Play(slideAnimation,  -1);
                 armatureComponent.animation.timeScale = 1f;
                 state = State.SLIDE;
+        }
+    }
+
+    public void Rise(){
+        if(state != State.RISE){
+            armatureComponent.animation.Play(riseAnimation,  -1);
+            armatureComponent.animation.timeScale = 1f;
+            state = State.RISE;
+            player.IsRise = true;
+        }
+        
+        if(armatureComponent.animation.GetState(riseAnimation)!= null && (armatureComponent.animation.GetState(riseAnimation).currentTime >= 0.5 )) 
+        {
+            player.IsRise = false;
         }
     }
 
