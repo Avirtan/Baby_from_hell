@@ -96,6 +96,7 @@ public class AnimationController : MonoBehaviour
         if(state == State.FAIL || state == State.JUMP){
             if((armatureComponent.animation.lastAnimationName == "jump2"  || armatureComponent.animation.lastAnimationName == "fall") && state != State.LANDING){
                 state = State.LANDING;
+                armatureComponent.animation.timeScale = 1.5f;
                 armatureComponent.animation.GotoAndPlayByTime(jumpRunAnimation,1.25f);
                 player.IsLanding = true;
             }

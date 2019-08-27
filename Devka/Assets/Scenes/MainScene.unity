@@ -7085,7 +7085,7 @@ MonoBehaviour:
   armatureName: Armature
   isUGUI: 0
   debugDraw: 0
-  animationName: idle
+  animationName: running
   _playTimes: 0
   _timeScale: 1
   _sortingMode: 0
