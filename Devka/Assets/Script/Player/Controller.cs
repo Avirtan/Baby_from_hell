@@ -130,36 +130,26 @@ public class Controller : MonoBehaviour
     }
 
     private void HandlerRise(){
-           //Debug.Log(isRise);
-
+           //Debug.Log(CheckBlocksForRiseLeft());
            //для правой стороны
-           if(CheckBlocksForRiseRight() && direction == 1){
+           if((CheckBlocksForRiseRight() && direction == 1)){
                isRise = 1;
            }
-           if(isRise != direction || sprite.riseTime > 0.81f){
+           //для левой стороны
+           if((CheckBlocksForRiseLeft() && direction == -1)){
+               isRise = -1;
+           }
+           if(isRise != direction || sprite.riseTime > 0.81f || isGround()){
                isRise = 0;
                sprite.riseTime = 0;
            }
            if(isRise!=0){
-               
                if(sprite.riseTime<=0.42 ){
                    velocity.y = 5;
                  }
-                if(sprite.riseTime > 0.42f && sprite.riseTime < 0.81f)velocity.x = 5;
+                if(sprite.riseTime > 0.42f && sprite.riseTime < 0.81f && isRise == 1)velocity.x = 5;
+                else if(sprite.riseTime > 0.42f && sprite.riseTime < 0.81f && isRise == -1) velocity.x -=5;
            }
-           /*  if(sprite.riseTime > 0) IsRise = true;
-            if((!isWall() && !CheckBlocksForRiseRight()) || isGround() || sprite.riseTime >= 0.81f) isRise = false;
-            if(isRise){
-                //rgb3d.velocity = Vector3.zero;
-                //velocity = Vector3.zero;
-                if(sprite.riseTime<=0.42 ){
-                   velocity.y = 5;
-                 }
-                if(sprite.riseTime > 0.42f && sprite.riseTime < 0.81f)velocity.x = 5;
-            }
-            if(direction == 1 && !isRise){
-                rgb3d.velocity = Vector3.zero;
-            }*/
     }
 
     //отслеживание ввода с клавиатуры
@@ -245,16 +235,27 @@ public class Controller : MonoBehaviour
     private bool CheckBlocksForRiseRight(){
         //Debug.DrawLine(new Vector3(rgb3d.position.x,rgb3d.position.y+1.8f,rgb3d.position.z),new Vector3(rgb3d.position.x+Xlength,rgb3d.position.y+1.8f,rgb3d.position.z),Color.red,1f);
        // Debug.DrawLine(new Vector3(rgb3d.position.x,rgb3d.position.y+2.5f,rgb3d.position.z),new Vector3(rgb3d.position.x+Xlength,rgb3d.position.y+2.5f,rgb3d.position.z),Color.red,1f);
-       // Debug.DrawLine(new Vector3(rgb3d.position.x,rgb3d.position.y-0.8f,rgb3d.position.z),new Vector3(rgb3d.position.x+Xlength,rgb3d.position.y-0.8f,rgb3d.position.z),Color.red,1f);
-        Debug.DrawLine(new Vector3(rgb3d.position.x,rgb3d.position.y+1.5f,rgb3d.position.z),new Vector3(rgb3d.position.x+Xlength,rgb3d.position.y+1.5f,rgb3d.position.z),Color.red,1f);
-        bool Up = Physics.Linecast(new Vector3(rgb3d.position.x,rgb3d.position.y+2.5f,rgb3d.position.z),new Vector3(rgb3d.position.x+2,rgb3d.position.y+2.5f,rgb3d.position.z));
-        bool UpDown =  Physics.Linecast(new Vector3(rgb3d.position.x,rgb3d.position.y+1.8f,rgb3d.position.z),new Vector3(rgb3d.position.x+1.5f,rgb3d.position.y+1.8f,rgb3d.position.z));
+        //Debug.DrawLine(new Vector3(rgb3d.position.x,rgb3d.position.y+1.5f,rgb3d.position.z),new Vector3(rgb3d.position.x+Xlength,rgb3d.position.y+1.5f,rgb3d.position.z),Color.red,1f);
+        bool Up = Physics.Linecast(new Vector3(rgb3d.position.x,rgb3d.position.y+2.5f,rgb3d.position.z),new Vector3(rgb3d.position.x+Xlength,rgb3d.position.y+2.5f,rgb3d.position.z));
+        bool UpDown =  Physics.Linecast(new Vector3(rgb3d.position.x,rgb3d.position.y+1.8f,rgb3d.position.z),new Vector3(rgb3d.position.x+Xlength,rgb3d.position.y+1.8f,rgb3d.position.z));
         bool Middle = Physics.Linecast(new Vector3(rgb3d.position.x,rgb3d.position.y+1.5f,rgb3d.position.z),new Vector3(rgb3d.position.x+Xlength,rgb3d.position.y+1.5f,rgb3d.position.z));
-        //bool Bottom = Physics.Linecast(new Vector3(rgb3d.position.x,rgb3d.position.y-0.8f,rgb3d.position.z),new Vector3(rgb3d.position.x+Xlength,rgb3d.position.y-0.8f,rgb3d.position.z));
         /*Debug.Log("Up:"+Up);
-        Debug.Log("Updown:"+UpDown);*/
-        Debug.Log("middle:"+Middle);
-       // Debug.Log("bottom:"+Bottom); 
+        Debug.Log("Updown:"+UpDown);
+        Debug.Log("middle:"+Middle);*/
+        if(!Up && !UpDown && Middle ) return true;
+        else return false;
+    }
+
+    private bool CheckBlocksForRiseLeft(){
+        Debug.DrawLine(new Vector3(rgb3d.position.x,rgb3d.position.y+1.8f,rgb3d.position.z),new Vector3(rgb3d.position.x-Xlength,rgb3d.position.y+1.8f,rgb3d.position.z),Color.red,1f);
+        Debug.DrawLine(new Vector3(rgb3d.position.x,rgb3d.position.y+2.5f,rgb3d.position.z),new Vector3(rgb3d.position.x-Xlength,rgb3d.position.y+2.5f,rgb3d.position.z),Color.red,1f);
+        Debug.DrawLine(new Vector3(rgb3d.position.x,rgb3d.position.y+1.5f,rgb3d.position.z),new Vector3(rgb3d.position.x-Xlength,rgb3d.position.y+1.5f,rgb3d.position.z),Color.red,1f);
+        bool Up = Physics.Linecast(new Vector3(rgb3d.position.x,rgb3d.position.y+2.5f,rgb3d.position.z),new Vector3(rgb3d.position.x-Xlength,rgb3d.position.y+2.5f,rgb3d.position.z));
+        bool UpDown =  Physics.Linecast(new Vector3(rgb3d.position.x,rgb3d.position.y+1.8f,rgb3d.position.z),new Vector3(rgb3d.position.x-Xlength,rgb3d.position.y+1.8f,rgb3d.position.z));
+        bool Middle = Physics.Linecast(new Vector3(rgb3d.position.x,rgb3d.position.y+1.5f,rgb3d.position.z),new Vector3(rgb3d.position.x-Xlength,rgb3d.position.y+1.5f,rgb3d.position.z));
+        /*Debug.Log("Up:"+Up);
+        Debug.Log("Updown:"+UpDown);
+        Debug.Log("middle:"+Middle);*/
         if(!Up && !UpDown && Middle ) return true;
         else return false;
     }
