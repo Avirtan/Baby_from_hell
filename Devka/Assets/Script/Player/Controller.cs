@@ -130,7 +130,6 @@ public class Controller : MonoBehaviour
     }
 
     private void HandlerRise(){
-           //Debug.Log(CheckBlocksForRiseLeft());
            //для правой стороны
            if((CheckBlocksForRiseRight() && direction == 1)){
                isRise = 1;
@@ -247,9 +246,9 @@ public class Controller : MonoBehaviour
     }
 
     private bool CheckBlocksForRiseLeft(){
-        Debug.DrawLine(new Vector3(rgb3d.position.x,rgb3d.position.y+1.8f,rgb3d.position.z),new Vector3(rgb3d.position.x-Xlength,rgb3d.position.y+1.8f,rgb3d.position.z),Color.red,1f);
-        Debug.DrawLine(new Vector3(rgb3d.position.x,rgb3d.position.y+2.5f,rgb3d.position.z),new Vector3(rgb3d.position.x-Xlength,rgb3d.position.y+2.5f,rgb3d.position.z),Color.red,1f);
-        Debug.DrawLine(new Vector3(rgb3d.position.x,rgb3d.position.y+1.5f,rgb3d.position.z),new Vector3(rgb3d.position.x-Xlength,rgb3d.position.y+1.5f,rgb3d.position.z),Color.red,1f);
+        //Debug.DrawLine(new Vector3(rgb3d.position.x,rgb3d.position.y+1.8f,rgb3d.position.z),new Vector3(rgb3d.position.x-Xlength,rgb3d.position.y+1.8f,rgb3d.position.z),Color.red,1f);
+        //Debug.DrawLine(new Vector3(rgb3d.position.x,rgb3d.position.y+2.5f,rgb3d.position.z),new Vector3(rgb3d.position.x-Xlength,rgb3d.position.y+2.5f,rgb3d.position.z),Color.red,1f);
+       //Debug.DrawLine(new Vector3(rgb3d.position.x,rgb3d.position.y+1.5f,rgb3d.position.z),new Vector3(rgb3d.position.x-Xlength,rgb3d.position.y+1.5f,rgb3d.position.z),Color.red,1f);
         bool Up = Physics.Linecast(new Vector3(rgb3d.position.x,rgb3d.position.y+2.5f,rgb3d.position.z),new Vector3(rgb3d.position.x-Xlength,rgb3d.position.y+2.5f,rgb3d.position.z));
         bool UpDown =  Physics.Linecast(new Vector3(rgb3d.position.x,rgb3d.position.y+1.8f,rgb3d.position.z),new Vector3(rgb3d.position.x-Xlength,rgb3d.position.y+1.8f,rgb3d.position.z));
         bool Middle = Physics.Linecast(new Vector3(rgb3d.position.x,rgb3d.position.y+1.5f,rgb3d.position.z),new Vector3(rgb3d.position.x-Xlength,rgb3d.position.y+1.5f,rgb3d.position.z));
