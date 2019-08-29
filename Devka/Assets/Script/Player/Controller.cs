@@ -39,8 +39,8 @@ public class Controller : MonoBehaviour
             isLanding = value;
         }
     }
-    private bool isRise = false;
-    public bool IsRise
+    private int isRise = 0;
+    public int IsRise
     {
         get
         {
@@ -127,34 +127,39 @@ public class Controller : MonoBehaviour
             }
         }
         if(!isWall() || isGround()) timerWall = 0;
-
-        //if(rgb3d.velocity.y>0) rgb3d.AddForce(Vector3.up * 2);
-        //if(rgb3d.velocity.y<-1) rgb3d.AddForce(Vector3.down * -9);
     }
 
     private void HandlerRise(){
-        //Debug.Log(isRise);
-       // if(wallDirection()==1 && CheckBlocksForRiseRight()){
-            if(sprite.riseTime > 0) IsRise = true;
-            if((!isWall() && !CheckBlocksForRiseRight()) || isGround() || sprite.riseTime >= 0.81f) isRise = false; 
-            Debug.Log(sprite.riseTime<=0.42 && CheckBottomBlocksForUp());
+           //Debug.Log(isRise);
+
+           //для правой стороны
+           if(CheckBlocksForRiseRight() && direction == 1){
+               isRise = 1;
+           }
+           if(isRise != direction || sprite.riseTime > 0.81f){
+               isRise = 0;
+               sprite.riseTime = 0;
+           }
+           if(isRise!=0){
+               
+               if(sprite.riseTime<=0.42 ){
+                   velocity.y = 5;
+                 }
+                if(sprite.riseTime > 0.42f && sprite.riseTime < 0.81f)velocity.x = 5;
+           }
+           /*  if(sprite.riseTime > 0) IsRise = true;
+            if((!isWall() && !CheckBlocksForRiseRight()) || isGround() || sprite.riseTime >= 0.81f) isRise = false;
             if(isRise){
                 //rgb3d.velocity = Vector3.zero;
                 //velocity = Vector3.zero;
-                if(sprite.riseTime<=0.42 && CheckBottomBlocksForUp()){
-                   //transform.position = new Vector3(transform.position.x,transform.position.y+Time.deltaTime*20,0);
+                if(sprite.riseTime<=0.42 ){
                    velocity.y = 5;
                  }
-                if(sprite.riseTime > 0.42f && sprite.riseTime < 0.81f)velocity.x = 5;//transform.position = new Vector3(transform.position.x+Time.deltaTime*20,transform.position.y+Time.deltaTime*25,0);// rgb3d.AddForce(new Vector3(200,0,0));
+                if(sprite.riseTime > 0.42f && sprite.riseTime < 0.81f)velocity.x = 5;
             }
             if(direction == 1 && !isRise){
                 rgb3d.velocity = Vector3.zero;
-                //transform.position = new Vector3(transform.position.x,transform.position.y,0);
-                //transform.position = new Vector3(transform.position.x,transform.position.y,2);
-                //rgb3d.AddForce(new Vector3(20,20,0));
-                //transform.position = new Vector3(transform.position.x,transform.position.y,0);
-            }
-       // }
+            }*/
     }
 
     //отслеживание ввода с клавиатуры
@@ -173,9 +178,9 @@ public class Controller : MonoBehaviour
     private void AnimationController(){
         if(false){
             return;
-        }else if((wallDirection()==1 && CheckBlocksForRiseRight()) || isRise){
+        }else if(isRise!=0){//(wallDirection()==1 && CheckBlocksForRiseRight()) || isRise){
             sprite.Rise();
-        }else if(wallDirection()!=0 && wallDirection() == direction && rgb3d.velocity.y < 0 && !isGround()){
+        }else if(wallDirection()!=0  && rgb3d.velocity.y < 0 && !isGround()){
              sprite.Slide();
         }else if(!isGround()){
             if(rgb3d.velocity.y > 0) {sprite.Jump();}
@@ -236,19 +241,22 @@ public class Controller : MonoBehaviour
     }
 
     //Заползание 
+    private float Xlength = 0.8f;
     private bool CheckBlocksForRiseRight(){
-        //Debug.DrawLine(new Vector3(rgb3d.position.x,rgb3d.position.y+1.2f,rgb3d.position.z),new Vector3(rgb3d.position.x+1.5f,rgb3d.position.y+1.2f,rgb3d.position.z),Color.red,1f);
-        //Debug.DrawLine(new Vector3(rgb3d.position.x,rgb3d.position.y+2,rgb3d.position.z),new Vector3(rgb3d.position.x+2,rgb3d.position.y+2,rgb3d.position.z),Color.red,1f);
-        bool up = Physics.Linecast(new Vector3(rgb3d.position.x,rgb3d.position.y+2,rgb3d.position.z),new Vector3(rgb3d.position.x+2,rgb3d.position.y+2,rgb3d.position.z));
-        bool down =  Physics.Linecast(new Vector3(rgb3d.position.x,rgb3d.position.y+1.2f,rgb3d.position.z),new Vector3(rgb3d.position.x+1.5f,rgb3d.position.y+1.2f,rgb3d.position.z));
-       //Debug.Log("up"+up);
-       //Debug.Log("down"+down);
-        if(!up && !down) return true;
+        Debug.DrawLine(new Vector3(rgb3d.position.x,rgb3d.position.y+1.8f,rgb3d.position.z),new Vector3(rgb3d.position.x+Xlength,rgb3d.position.y+1.8f,rgb3d.position.z),Color.red,1f);
+        Debug.DrawLine(new Vector3(rgb3d.position.x,rgb3d.position.y+2.5f,rgb3d.position.z),new Vector3(rgb3d.position.x+Xlength,rgb3d.position.y+2.5f,rgb3d.position.z),Color.red,1f);
+       // Debug.DrawLine(new Vector3(rgb3d.position.x,rgb3d.position.y-0.8f,rgb3d.position.z),new Vector3(rgb3d.position.x+Xlength,rgb3d.position.y-0.8f,rgb3d.position.z),Color.red,1f);
+        Debug.DrawLine(new Vector3(rgb3d.position.x,rgb3d.position.y+1.5f,rgb3d.position.z),new Vector3(rgb3d.position.x+Xlength,rgb3d.position.y+1.5f,rgb3d.position.z),Color.red,1f);
+        bool Up = Physics.Linecast(new Vector3(rgb3d.position.x,rgb3d.position.y+2.5f,rgb3d.position.z),new Vector3(rgb3d.position.x+2,rgb3d.position.y+2.5f,rgb3d.position.z));
+        bool UpDown =  Physics.Linecast(new Vector3(rgb3d.position.x,rgb3d.position.y+1.8f,rgb3d.position.z),new Vector3(rgb3d.position.x+1.5f,rgb3d.position.y+1.8f,rgb3d.position.z));
+        bool Middle = Physics.Linecast(new Vector3(rgb3d.position.x,rgb3d.position.y+1.5f,rgb3d.position.z),new Vector3(rgb3d.position.x+Xlength,rgb3d.position.y+1.5f,rgb3d.position.z));
+        //bool Bottom = Physics.Linecast(new Vector3(rgb3d.position.x,rgb3d.position.y-0.8f,rgb3d.position.z),new Vector3(rgb3d.position.x+Xlength,rgb3d.position.y-0.8f,rgb3d.position.z));
+        /*Debug.Log("Up:"+Up);
+        Debug.Log("Updown:"+UpDown);*/
+        Debug.Log("middle:"+Middle);
+       // Debug.Log("bottom:"+Bottom); 
+        if(!Up && !UpDown && Middle ) return true;
         else return false;
-    }
-    private bool CheckBottomBlocksForUp(){
-        //Debug.DrawLine(new Vector3(rgb3d.position.x,rgb3d.position.y-1.2f,rgb3d.position.z),new Vector3(rgb3d.position.x+1.5f,rgb3d.position.y-1.2f,rgb3d.position.z),Color.red,1f);
-        return Physics.Linecast(new Vector3(rgb3d.position.x,rgb3d.position.y-1.2f,rgb3d.position.z),new Vector3(rgb3d.position.x+1.5f,rgb3d.position.y-1.2f,rgb3d.position.z));
     }
 
 

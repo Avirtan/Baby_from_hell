@@ -127,7 +127,7 @@ public class AnimationController : MonoBehaviour
         
         if(armatureComponent.animation.GetState(riseAnimation)!= null && (armatureComponent.animation.GetState(riseAnimation).currentTime >= 0.81 )) 
         {
-            //player.IsRise = false;
+            //riseTime = 0;
         }
         riseTime = armatureComponent.animation.GetState(riseAnimation).currentTime;
     }
