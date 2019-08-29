@@ -237,8 +237,8 @@ public class Controller : MonoBehaviour
 
     //Заползание 
     private bool CheckBlocksForRiseRight(){
-        Debug.DrawLine(new Vector3(rgb3d.position.x,rgb3d.position.y+1.2f,rgb3d.position.z),new Vector3(rgb3d.position.x+1.5f,rgb3d.position.y+1.2f,rgb3d.position.z),Color.red,1f);
-        Debug.DrawLine(new Vector3(rgb3d.position.x,rgb3d.position.y+2,rgb3d.position.z),new Vector3(rgb3d.position.x+2,rgb3d.position.y+2,rgb3d.position.z),Color.red,1f);
+        //Debug.DrawLine(new Vector3(rgb3d.position.x,rgb3d.position.y+1.2f,rgb3d.position.z),new Vector3(rgb3d.position.x+1.5f,rgb3d.position.y+1.2f,rgb3d.position.z),Color.red,1f);
+        //Debug.DrawLine(new Vector3(rgb3d.position.x,rgb3d.position.y+2,rgb3d.position.z),new Vector3(rgb3d.position.x+2,rgb3d.position.y+2,rgb3d.position.z),Color.red,1f);
         bool up = Physics.Linecast(new Vector3(rgb3d.position.x,rgb3d.position.y+2,rgb3d.position.z),new Vector3(rgb3d.position.x+2,rgb3d.position.y+2,rgb3d.position.z));
         bool down =  Physics.Linecast(new Vector3(rgb3d.position.x,rgb3d.position.y+1.2f,rgb3d.position.z),new Vector3(rgb3d.position.x+1.5f,rgb3d.position.y+1.2f,rgb3d.position.z));
        //Debug.Log("up"+up);
@@ -247,7 +247,7 @@ public class Controller : MonoBehaviour
         else return false;
     }
     private bool CheckBottomBlocksForUp(){
-        Debug.DrawLine(new Vector3(rgb3d.position.x,rgb3d.position.y-1.2f,rgb3d.position.z),new Vector3(rgb3d.position.x+1.5f,rgb3d.position.y-1.2f,rgb3d.position.z),Color.red,1f);
+        //Debug.DrawLine(new Vector3(rgb3d.position.x,rgb3d.position.y-1.2f,rgb3d.position.z),new Vector3(rgb3d.position.x+1.5f,rgb3d.position.y-1.2f,rgb3d.position.z),Color.red,1f);
         return Physics.Linecast(new Vector3(rgb3d.position.x,rgb3d.position.y-1.2f,rgb3d.position.z),new Vector3(rgb3d.position.x+1.5f,rgb3d.position.y-1.2f,rgb3d.position.z));
     }
 
