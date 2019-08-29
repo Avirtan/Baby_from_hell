@@ -71,7 +71,7 @@ public class Controller : MonoBehaviour
         HandlerMove();
         AnimationController();
         
-        Debug.Log(IsRise);
+        //Debug.Log(IsRise);
         fGroundedRemember -= Time.deltaTime;
         if (isGround() && !isJump())
         {
@@ -133,15 +133,28 @@ public class Controller : MonoBehaviour
     }
 
     private void HandlerRise(){
-        //Debug.Log(CheckBlocksForRiseRight());
-        if(wallDirection()==1 && CheckBlocksForRiseRight()){
+        //Debug.Log(isRise);
+       // if(wallDirection()==1 && CheckBlocksForRiseRight()){
+            if(sprite.riseTime > 0) IsRise = true;
+            if((!isWall() && !CheckBlocksForRiseRight()) || isGround() || sprite.riseTime >= 0.81f) isRise = false; 
+            Debug.Log(sprite.riseTime<=0.42 && CheckBottomBlocksForUp());
             if(isRise){
-                rgb3d.velocity = Vector3.zero;
-                velocity = Vector3.zero;
+                //rgb3d.velocity = Vector3.zero;
+                //velocity = Vector3.zero;
+                if(sprite.riseTime<=0.42 && CheckBottomBlocksForUp()){
+                   //transform.position = new Vector3(transform.position.x,transform.position.y+Time.deltaTime*20,0);
+                   velocity.y = 5;
+                 }
+                if(sprite.riseTime > 0.42f && sprite.riseTime < 0.81f)velocity.x = 5;//transform.position = new Vector3(transform.position.x+Time.deltaTime*20,transform.position.y+Time.deltaTime*25,0);// rgb3d.AddForce(new Vector3(200,0,0));
             }
-            if(direction == 1 && !isRise)
-                transform.position = new Vector3(transform.position.x+1,transform.position.y+1,0);
-        }
+            if(direction == 1 && !isRise){
+                rgb3d.velocity = Vector3.zero;
+                //transform.position = new Vector3(transform.position.x,transform.position.y,0);
+                //transform.position = new Vector3(transform.position.x,transform.position.y,2);
+                //rgb3d.AddForce(new Vector3(20,20,0));
+                //transform.position = new Vector3(transform.position.x,transform.position.y,0);
+            }
+       // }
     }
 
     //отслеживание ввода с клавиатуры
@@ -160,7 +173,7 @@ public class Controller : MonoBehaviour
     private void AnimationController(){
         if(false){
             return;
-        }else if(wallDirection()==1 && CheckBlocksForRiseRight()){
+        }else if((wallDirection()==1 && CheckBlocksForRiseRight()) || isRise){
             sprite.Rise();
         }else if(wallDirection()!=0 && wallDirection() == direction && rgb3d.velocity.y < 0 && !isGround()){
              sprite.Slide();
@@ -224,14 +237,18 @@ public class Controller : MonoBehaviour
 
     //Заползание 
     private bool CheckBlocksForRiseRight(){
-        //Debug.DrawLine(new Vector3(rgb3d.position.x,rgb3d.position.y+0.7f,rgb3d.position.z),new Vector3(rgb3d.position.x+1.5f,rgb3d.position.y+0.7f,rgb3d.position.z),Color.red,1f);
-        //Debug.DrawLine(new Vector3(rgb3d.position.x,rgb3d.position.y+2,rgb3d.position.z),new Vector3(rgb3d.position.x+2,rgb3d.position.y+2,rgb3d.position.z),Color.red,1f);
+        Debug.DrawLine(new Vector3(rgb3d.position.x,rgb3d.position.y+1.2f,rgb3d.position.z),new Vector3(rgb3d.position.x+1.5f,rgb3d.position.y+1.2f,rgb3d.position.z),Color.red,1f);
+        Debug.DrawLine(new Vector3(rgb3d.position.x,rgb3d.position.y+2,rgb3d.position.z),new Vector3(rgb3d.position.x+2,rgb3d.position.y+2,rgb3d.position.z),Color.red,1f);
         bool up = Physics.Linecast(new Vector3(rgb3d.position.x,rgb3d.position.y+2,rgb3d.position.z),new Vector3(rgb3d.position.x+2,rgb3d.position.y+2,rgb3d.position.z));
-        bool down =  Physics.Linecast(new Vector3(rgb3d.position.x,rgb3d.position.y+0.7f,rgb3d.position.z),new Vector3(rgb3d.position.x+1.5f,rgb3d.position.y+0.7f,rgb3d.position.z));
+        bool down =  Physics.Linecast(new Vector3(rgb3d.position.x,rgb3d.position.y+1.2f,rgb3d.position.z),new Vector3(rgb3d.position.x+1.5f,rgb3d.position.y+1.2f,rgb3d.position.z));
        //Debug.Log("up"+up);
        //Debug.Log("down"+down);
         if(!up && !down) return true;
         else return false;
+    }
+    private bool CheckBottomBlocksForUp(){
+        Debug.DrawLine(new Vector3(rgb3d.position.x,rgb3d.position.y-1.2f,rgb3d.position.z),new Vector3(rgb3d.position.x+1.5f,rgb3d.position.y-1.2f,rgb3d.position.z),Color.red,1f);
+        return Physics.Linecast(new Vector3(rgb3d.position.x,rgb3d.position.y-1.2f,rgb3d.position.z),new Vector3(rgb3d.position.x+1.5f,rgb3d.position.y-1.2f,rgb3d.position.z));
     }
 
 

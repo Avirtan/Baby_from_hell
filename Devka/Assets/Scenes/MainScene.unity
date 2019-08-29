@@ -10899,7 +10899,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1853774784}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.49, y: 2.88, z: 0}
+  m_LocalPosition: {x: 15.88, y: 1.89, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1633212535}
@@ -10935,7 +10935,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 7
-  jumpForce: 300
+  jumpForce: 400
 --- !u!54 &1853774788
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10974,6 +10974,7 @@ MonoBehaviour:
   failAnimation: fall
   dieAnimation: Die
   attackAnimation: Attack
+  riseTime: 0
 --- !u!4 &1854983628 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 128245815806430908, guid: 6da3027e9226d4b4ca5cb727999127e8,

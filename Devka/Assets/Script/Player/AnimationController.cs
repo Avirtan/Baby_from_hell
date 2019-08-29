@@ -20,7 +20,7 @@ public class AnimationController : MonoBehaviour
 
     enum State {IDLE, RUN,SHOOT,JUMP,DEAD,FAIL,LANDING,SLIDE,RISE};
     private State state = State.IDLE;
-
+    public float riseTime = 0; 
     private double time;
     private UnityArmatureComponent armatureComponent;
 	private DragonBones.AnimationState animState;
@@ -36,7 +36,7 @@ public class AnimationController : MonoBehaviour
     {
       //Debug.Log(player.IsFail);
       //Debug.Log(armatureComponent.animation.GetState(jumpRunAnimation)._animationData.frameCount);
-       Debug.Log(state);
+       //Debug.Log(state);
     }
 
 
@@ -122,13 +122,14 @@ public class AnimationController : MonoBehaviour
             armatureComponent.animation.Play(riseAnimation,  -1);
             armatureComponent.animation.timeScale = 1f;
             state = State.RISE;
-            player.IsRise = true;
+            //player.IsRise = true;
         }
         
         if(armatureComponent.animation.GetState(riseAnimation)!= null && (armatureComponent.animation.GetState(riseAnimation).currentTime >= 0.81 )) 
         {
-            player.IsRise = false;
+            //player.IsRise = false;
         }
+        riseTime = armatureComponent.animation.GetState(riseAnimation).currentTime;
     }
 
     public void FlipX(int flip){
