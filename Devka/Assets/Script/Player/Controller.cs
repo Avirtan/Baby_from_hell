@@ -77,7 +77,6 @@ public class Controller : MonoBehaviour
         {
             fGroundedRemember = fGroundedRememberTime;
         }
-        //Debug.Log(CheckBlocksForRiseRight());
     }
 
     // Для физических действий
@@ -138,16 +137,21 @@ public class Controller : MonoBehaviour
            if((CheckBlocksForRiseLeft() && direction == -1)){
                isRise = -1;
            }
-           if(isRise != direction || sprite.riseTime > 0.81f || isGround()){
+           Debug.Log(sprite.riseTime);
+           if(isRise != direction || sprite.riseTime > 0.71f || isGround()){
                isRise = 0;
                sprite.riseTime = 0;
            }
            if(isRise!=0){
                if(sprite.riseTime<=0.42 ){
-                   velocity.y = 5;
+                   velocity.y = 5f;
                  }
-                if(sprite.riseTime > 0.42f && sprite.riseTime < 0.81f && isRise == 1)velocity.x = 5;
-                else if(sprite.riseTime > 0.42f && sprite.riseTime < 0.81f && isRise == -1) velocity.x -=5;
+                if(sprite.riseTime > 0.42f && sprite.riseTime < 0.81f){
+                    velocity.x = 5*isRise;
+                }
+               /*  else if(sprite.riseTime > 0.42f && sprite.riseTime < 0.81f && isRise == -1){
+                     velocity.x -=5;
+                }*/
            }
     }
 
