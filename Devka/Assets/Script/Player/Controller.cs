@@ -138,16 +138,16 @@ public class Controller : MonoBehaviour
                isRise = -1;
            }
            Debug.Log(sprite.riseTime);
-           if(isRise != direction || sprite.riseTime > 0.97f || isGround()){
+           if(isRise != direction || sprite.riseTime > 0.95f || isGround()){
                isRise = 0;
                sprite.riseTime = 0;
            }
            if(isRise!=0){
                if(sprite.riseTime<=0.42 ){
-                   velocity.y = 6f;
+                   velocity.y = 5f;
                  }
-                if(sprite.riseTime > 0.42f && sprite.riseTime < 0.97f){
-                    velocity.x = 5*isRise;
+                if(sprite.riseTime > 0.42 && sprite.riseTime < 0.97f){
+                    velocity.x = 2*isRise;
                 }
            }
     }
