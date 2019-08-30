@@ -144,7 +144,7 @@ public class Controller : MonoBehaviour
            }
            if(isRise!=0){
                if(sprite.riseTime<=0.42 ){
-                   velocity.y = 5f;
+                   velocity.y = 6f;
                  }
                 if(sprite.riseTime > 0.42f && sprite.riseTime < 0.97f){
                     velocity.x = 5*isRise;
